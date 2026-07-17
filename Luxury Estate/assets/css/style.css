@@ -1,0 +1,391 @@
+/* ============================================================
+   STYLE.CSS – Luxury Estate Theme
+   Deep Navy + Gold – Premium Real Estate
+   ============================================================ */
+
+:root {
+  --font-serif:  'Cormorant Garamond', serif;
+  --font-sans:   'DM Sans', system-ui, sans-serif;
+
+  /* Colour palette */
+  --navy:        #0d1b2a;
+  --navy-mid:    #13253b;
+  --navy-light:  #1a3250;
+
+  --gold:        #c9a84c;
+  --gold-light:  #e2c97e;
+  --gold-shine:  #f5e3a9;
+
+  --text-primary:   #f0e6d3;
+  --text-secondary: #8faabe;
+  --text-gold:      var(--gold-light);
+
+  /* Glass */
+  --glass-card:   rgba(13, 27, 42, 0.72);
+  --glass-border: rgba(201, 168, 76, 0.25);
+  --glass-action: rgba(255, 255, 255, 0.04);
+  --glass-action-hover: rgba(201, 168, 76, 0.08);
+
+  --radius-card:   36px;
+  --radius-btn:    16px;
+  --radius-action: 16px;
+  --radius-icon:   12px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--navy);
+  background-image:
+    radial-gradient(circle at 20% 20%,  rgba(201, 168, 76, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 80% 80%,  rgba(201, 168, 76, 0.06) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%,  rgba(26, 50, 80, 0.5)   0%, transparent 70%);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  overflow-x: hidden;
+  position: relative;
+}
+
+#estate-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* ──────────────────────────────────────────────────────────
+   CARD
+   ────────────────────────────────────────────────────────── */
+.card-wrapper {
+  width: 100%;
+  max-width: 400px;
+  z-index: 10;
+  position: relative;
+}
+
+.glass-card {
+  background: var(--glass-card);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-card);
+  padding: 40px 32px;
+  box-shadow:
+    0 32px 64px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(201, 168, 76, 0.12);
+  position: relative;
+}
+
+/* ──────────────────────────────────────────────────────────
+   GOLD ACCENT DIVIDER
+   ────────────────────────────────────────────────────────── */
+.gold-accent {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 0 auto 28px;
+  border-radius: 2px;
+}
+
+/* ──────────────────────────────────────────────────────────
+   SHARE FAB
+   ────────────────────────────────────────────────────────── */
+.share-fab {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  background: rgba(201, 168, 76, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold-light);
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  z-index: 20;
+}
+
+.share-fab .material-symbols-outlined { font-size: 20px; }
+
+.share-fab:hover {
+  background: rgba(201, 168, 76, 0.18);
+  transform: scale(1.08);
+  box-shadow: 0 0 16px rgba(201, 168, 76, 0.3);
+}
+
+.share-fab:active { transform: scale(0.95); }
+
+/* ──────────────────────────────────────────────────────────
+   PROFILE
+   ────────────────────────────────────────────────────────── */
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.avatar-wrap {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-shine) 50%, var(--gold) 100%);
+  background-size: 200% 200%;
+  animation: goldShimmer 4s ease infinite;
+  box-shadow: 0 8px 28px rgba(201, 168, 76, 0.3);
+  margin-bottom: 14px;
+}
+
+@keyframes goldShimmer {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--navy);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(201, 168, 76, 0.15);
+  border: 1px solid rgba(201, 168, 76, 0.4);
+  color: var(--gold-light);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.badge::before {
+  content: '✦';
+  font-size: 8px;
+}
+
+.profile-name {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.01em;
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+
+.profile-title {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ──────────────────────────────────────────────────────────
+   STATS ROW
+   ────────────────────────────────────────────────────────── */
+.stats-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 16px 8px;
+  margin-bottom: 28px;
+}
+
+.stat-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.stat-number {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--gold-light);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 10px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 40px;
+  background: var(--glass-border);
+}
+
+/* ──────────────────────────────────────────────────────────
+   SAVE CONTACT CTA
+   ────────────────────────────────────────────────────────── */
+.save-contact-btn {
+  width: 100%;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-shine) 50%, var(--gold) 100%);
+  background-size: 200% 100%;
+  color: var(--navy);
+  border: none;
+  border-radius: var(--radius-btn);
+  padding: 16px;
+  font-size: 15px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-bottom: 28px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-position 0.5s ease;
+  box-shadow: 0 8px 24px rgba(201, 168, 76, 0.35);
+}
+
+.save-contact-btn:hover {
+  background-position: 100% 0;
+  box-shadow: 0 12px 30px rgba(201, 168, 76, 0.5);
+  transform: translateY(-2px);
+}
+
+.save-contact-btn:active { transform: scale(0.97); }
+
+/* ──────────────────────────────────────────────────────────
+   ACTION BUTTONS
+   ────────────────────────────────────────────────────────── */
+.actions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  background: var(--glass-action);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 13px 16px;
+  border-radius: var(--radius-action);
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.action-btn:hover {
+  background: var(--glass-action-hover);
+  border-color: rgba(201, 168, 76, 0.3);
+  transform: translateX(3px);
+}
+
+.action-btn:active { transform: scale(0.98) translateX(0); }
+
+.action-icon-wrap {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-icon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 14px;
+  background: rgba(201, 168, 76, 0.1);
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  flex-shrink: 0;
+  color: var(--gold-light);
+}
+
+.action-icon-wrap .material-symbols-outlined {
+  font-size: 20px;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.action-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.action-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.action-sub {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.action-arrow {
+  color: rgba(201, 168, 76, 0.4);
+  font-size: 22px;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.action-btn:hover .action-arrow {
+  color: var(--gold-light);
+  transform: translateX(2px);
+}
+
+/* ──────────────────────────────────────────────────────────
+   TOAST NOTIFICATION
+   ────────────────────────────────────────────────────────── */
+.toast-container {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.toast {
+  background: var(--gold);
+  color: var(--navy);
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(201, 168, 76, 0.4);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: toastEnter 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.toast.fade-out { animation: toastExit 0.3s ease-in forwards; }
+
+@keyframes toastEnter { to { opacity: 1; transform: translateY(0); } }
+@keyframes toastExit  { to { opacity: 0; transform: translateY(20px); } }
