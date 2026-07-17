@@ -6,6 +6,28 @@
   'use strict';
 
   /* ============================================================
+     TOAST NOTIFICATION LOGIC
+  ============================================================ */
+  function showToast(message) {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+
+    container.appendChild(toast);
+
+    // Remove after 3 seconds
+    setTimeout(() => {
+      toast.classList.add('fade-out');
+      toast.addEventListener('animationend', () => {
+        toast.remove();
+      });
+    }, 3000);
+  }
+
+  /* ============================================================
      SAVE CONTACT BUTTON
      – Generates a vCard (.vcf) file and triggers download
   ============================================================ */
@@ -45,6 +67,35 @@
       saveBtn.style.background = '#10b981'; // Green success color
       saveBtn.style.color = 'white';
       saveBtn.style.transform = 'scale(0.98)';
+    });
+  }
+
+  /* ============================================================
+     SHARE BUTTON LOGIC
+  ============================================================ */
+  const shareBtn = document.getElementById('btn-share');
+
+  if (shareBtn) {
+    shareBtn.addEventListener('click', async () => {
+      const shareData = {
+        title: 'Engr Shuvo Das',
+        text: 'Check out my digital business card!',
+        url: window.location.href, // Or hardcode canonical URL
+      };
+
+      try {
+        if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+          await navigator.share(shareData);
+        } else {
+          // Fallback: Copy to clipboard
+          await navigator.clipboard.writeText(shareData.url);
+          showToast('Link copied to clipboard!');
+        }
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          console.error('Error sharing:', err);
+        }
+      }
     });
   }
 
