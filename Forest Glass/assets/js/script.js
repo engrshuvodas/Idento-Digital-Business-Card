@@ -466,12 +466,7 @@
       saveBtn.disabled = true;
 
       setTimeout(() => {
-        if (icon) icon.textContent = 'check_circle';
-        // Replace text node (last child)
-        const textNodes = [...saveBtn.childNodes].filter(
-          (n) => n.nodeType === Node.TEXT_NODE
-        );
-        textNodes.forEach((n) => (n.textContent = ' Saved!'));
+        saveBtn.innerHTML = '<span class="material-symbols-outlined" aria-hidden="true">check_circle</span> Saved!';
         saveBtn.classList.add('saved');
       }, delay);
 
