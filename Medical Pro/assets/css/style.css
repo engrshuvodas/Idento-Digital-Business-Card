@@ -1,0 +1,496 @@
+/* ============================================================
+   STYLE.CSS – Medical Pro Theme
+   Clean White + Medical Blue/Teal — Doctor Business Card
+   ============================================================ */
+
+:root {
+  --font-sans:  'Nunito', system-ui, sans-serif;
+  --font-serif: 'Libre Baskerville', serif;
+
+  /* Colour palette */
+  --bg-start:    #e8f4fd;
+  --bg-end:      #d4edf8;
+
+  --blue:        #1a6fb5;
+  --blue-mid:    #1d88d8;
+  --blue-light:  #e8f4fd;
+  --teal:        #0aafaa;
+  --teal-light:  #e0f7f6;
+  --red-pulse:   #e74c3c;
+
+  --text-primary:   #0d2b4a;
+  --text-secondary: #5a7fa0;
+  --text-white:     #ffffff;
+
+  /* Glass */
+  --glass-card:         rgba(255, 255, 255, 0.75);
+  --glass-border:       rgba(26, 111, 181, 0.15);
+  --glass-action:       rgba(26, 111, 181, 0.04);
+  --glass-action-hover: rgba(26, 111, 181, 0.1);
+
+  --radius-card:   32px;
+  --radius-btn:    16px;
+  --radius-action: 16px;
+  --radius-icon:   12px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  background: linear-gradient(160deg, var(--bg-start) 0%, var(--bg-end) 100%);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ──────────────────────────────────────────────────────────
+   ECG CANVAS (BOTTOM STRIP)
+   ────────────────────────────────────────────────────────── */
+#ecg-canvas {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ──────────────────────────────────────────────────────────
+   FLOATING CROSS PARTICLES
+   ────────────────────────────────────────────────────────── */
+.bg-crosses {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bg-cross {
+  position: absolute;
+  opacity: 0;
+  font-family: var(--font-sans);
+  font-size: 22px;
+  color: var(--blue);
+  user-select: none;
+  animation: floatCross linear infinite;
+}
+
+@keyframes floatCross {
+  0%   { opacity: 0;    transform: translateY(0)     rotate(0deg); }
+  10%  { opacity: 1; }
+  90%  { opacity: 0.6; }
+  100% { opacity: 0;    transform: translateY(-110vh) rotate(360deg); }
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* ──────────────────────────────────────────────────────────
+   CARD
+   ────────────────────────────────────────────────────────── */
+.card-wrapper {
+  width: 100%;
+  max-width: 400px;
+  z-index: 10;
+  position: relative;
+}
+
+.glass-card {
+  background: var(--glass-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-card);
+  padding: 32px 28px 40px;
+  box-shadow:
+    0 20px 50px rgba(26, 111, 181, 0.12),
+    0 4px 16px rgba(26, 111, 181, 0.08);
+  position: relative;
+}
+
+/* ──────────────────────────────────────────────────────────
+   MED HEADER ICON
+   ────────────────────────────────────────────────────────── */
+.med-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.med-cross-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--teal) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(26, 111, 181, 0.35);
+}
+
+.med-cross-icon .material-symbols-outlined {
+  color: #fff;
+  font-size: 28px;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* ──────────────────────────────────────────────────────────
+   SHARE FAB
+   ────────────────────────────────────────────────────────── */
+.share-fab {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  background: rgba(26, 111, 181, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--blue);
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  z-index: 20;
+}
+
+.share-fab .material-symbols-outlined { font-size: 20px; }
+
+.share-fab:hover {
+  background: rgba(26, 111, 181, 0.15);
+  transform: scale(1.08);
+  box-shadow: 0 0 16px rgba(26, 111, 181, 0.25);
+}
+
+.share-fab:active { transform: scale(0.95); }
+
+/* ──────────────────────────────────────────────────────────
+   PROFILE
+   ────────────────────────────────────────────────────────── */
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Avatar with pulsing ring */
+.avatar-wrap {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 14px;
+}
+
+.avatar-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--text-white);
+  box-shadow: 0 8px 24px rgba(26, 111, 181, 0.2);
+  position: relative;
+  z-index: 2;
+}
+
+.avatar-ring-pulse {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 3px solid var(--red-pulse);
+  opacity: 0;
+  animation: heartPulse 2s ease-out infinite;
+  z-index: 1;
+}
+
+.avatar-ring-pulse::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 2px solid var(--red-pulse);
+  opacity: 0;
+  animation: heartPulse 2s ease-out 0.5s infinite;
+}
+
+@keyframes heartPulse {
+  0%   { opacity: 0.8; transform: scale(1); }
+  100% { opacity: 0;   transform: scale(1.35); }
+}
+
+.dr-prefix {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-style: italic;
+  color: var(--blue);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  margin-bottom: 2px;
+}
+
+.profile-name {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+
+.profile-specialty {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.clinic-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--teal-light);
+  color: var(--teal);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(10, 175, 170, 0.25);
+}
+
+.clinic-tag .material-symbols-outlined {
+  font-size: 15px;
+  font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 20;
+}
+
+/* ──────────────────────────────────────────────────────────
+   STATS ROW
+   ────────────────────────────────────────────────────────── */
+.stats-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--blue-light);
+  border: 1px solid rgba(26, 111, 181, 0.12);
+  border-radius: 20px;
+  padding: 16px 8px;
+  margin-bottom: 20px;
+}
+
+.stat-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.stat-number {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--blue);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 10px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 36px;
+  background: rgba(26, 111, 181, 0.15);
+}
+
+/* ──────────────────────────────────────────────────────────
+   ECG INLINE DIVIDER (SVG)
+   ────────────────────────────────────────────────────────── */
+.ecg-divider {
+  margin: 0 -4px 20px;
+  height: 40px;
+  overflow: hidden;
+}
+
+.ecg-divider svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ecg-line {
+  fill: none;
+  stroke: var(--red-pulse);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+  animation: drawECG 3s ease forwards infinite;
+}
+
+@keyframes drawECG {
+  0%   { stroke-dashoffset: 600; opacity: 1; }
+  70%  { stroke-dashoffset: 0;   opacity: 1; }
+  85%  { stroke-dashoffset: 0;   opacity: 0.8; }
+  100% { stroke-dashoffset: 0;   opacity: 0; }
+}
+
+/* ──────────────────────────────────────────────────────────
+   CTA BUTTON
+   ────────────────────────────────────────────────────────── */
+.save-contact-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(90deg, var(--blue) 0%, var(--teal) 100%);
+  color: var(--text-white);
+  border: none;
+  border-radius: var(--radius-btn);
+  padding: 15px;
+  font-size: 15px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 8px 24px rgba(26, 111, 181, 0.35);
+}
+
+.btn-icon { font-size: 20px; font-variation-settings: 'FILL' 1; }
+
+.save-contact-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(26, 111, 181, 0.45);
+}
+
+.save-contact-btn:active { transform: scale(0.97); }
+
+/* ──────────────────────────────────────────────────────────
+   ACTION BUTTONS
+   ────────────────────────────────────────────────────────── */
+.actions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  background: var(--glass-action);
+  border: 1px solid rgba(26, 111, 181, 0.1);
+  padding: 13px 14px;
+  border-radius: var(--radius-action);
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.action-btn:hover {
+  background: var(--glass-action-hover);
+  border-color: rgba(26, 111, 181, 0.25);
+  transform: translateX(3px);
+}
+
+.action-btn:active { transform: scale(0.98) translateX(0); }
+
+.action-icon-wrap {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-icon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 14px;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--teal) 100%);
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(26, 111, 181, 0.2);
+}
+
+.action-icon-wrap .material-symbols-outlined,
+.action-icon-wrap svg {
+  font-size: 20px;
+  color: var(--text-white);
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.action-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.action-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.action-sub {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.action-arrow {
+  color: rgba(26, 111, 181, 0.35);
+  font-size: 22px;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.action-btn:hover .action-arrow {
+  color: var(--blue);
+  transform: translateX(2px);
+}
+
+/* ──────────────────────────────────────────────────────────
+   TOAST
+   ────────────────────────────────────────────────────────── */
+.toast-container {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.toast {
+  background: var(--blue);
+  color: var(--text-white);
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(26, 111, 181, 0.35);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: toastEnter 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.toast.fade-out { animation: toastExit 0.3s ease-in forwards; }
+
+@keyframes toastEnter { to { opacity: 1; transform: translateY(0); } }
+@keyframes toastExit  { to { opacity: 0; transform: translateY(20px); } }
