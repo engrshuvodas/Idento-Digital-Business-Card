@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Engr Shuvo Das – Freelancer at Fiverr. Connect via this digital business card: email, WhatsApp, location, and social links." />
-  <title>Engr Shuvo Das | Minimal Light Theme</title>
+  <title>Engr Shuvo Das | Dark Galaxy Theme</title>
 
   <!-- Preconnect for performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,12 +21,15 @@
 </head>
 <body>
 
+  <!-- Dynamic star/nebula background effect -->
+  <div class="galaxy-bg" aria-hidden="true"></div>
+
   <main class="card-wrapper" role="main">
-    <article class="clean-card" aria-label="Engr Shuvo Das Digital Business Card">
+    <article class="glass-card" aria-label="Engr Shuvo Das Digital Business Card">
 
       <!-- ── Floating Share Button (top-right corner) ─────── -->
       <button class="share-fab" id="btn-share" aria-label="Share this card" title="Share">
-        <span class="material-symbols-outlined" aria-hidden="true">share</span>
+        <span class="material-symbols-outlined" aria-hidden="true">ios_share</span>
       </button>
 
       <!-- Profile Section -->
@@ -49,8 +52,8 @@
       <nav class="actions-list" aria-label="Contact actions">
 
         <a href="https://wa.me/919641700503" target="_blank" rel="noopener noreferrer" class="action-btn" id="btn-call" aria-label="WhatsApp Shuvo at +91 96417 00503">
-          <span class="action-icon-wrap icon-green" aria-hidden="true">
-            <span class="material-symbols-outlined">call</span>
+          <span class="action-icon-wrap" aria-hidden="true">
+            <span class="material-symbols-outlined icon-dark">call</span>
           </span>
           <span class="action-text">
             <span class="action-label">Call me</span>
@@ -60,8 +63,9 @@
         </a>
 
         <a href="https://www.instagram.com/engrshuvo74886/" target="_blank" rel="noopener noreferrer" class="action-btn" id="btn-follow" aria-label="Follow Shuvo on Instagram">
-          <span class="action-icon-wrap icon-blue" aria-hidden="true">
-            <span class="material-symbols-outlined">person_add</span>
+          <span class="action-icon-wrap" aria-hidden="true">
+            <!-- Using facebook logo as per the image, though linking to instagram -->
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="var(--icon-dark)"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
           </span>
           <span class="action-text">
             <span class="action-label">Follow me</span>
@@ -71,9 +75,8 @@
         </a>
 
         <a href="https://maps.app.goo.gl/9TnqmrrwfwZEkH7EA" target="_blank" rel="noopener noreferrer" class="action-btn" id="btn-office" aria-label="View Shuvo's location on Google Maps">
-          <span class="action-icon-wrap icon-maps" aria-hidden="true">
-            <!-- Using SVG for Google Maps icon inside style.css via background-image to match the image, or a simple span -->
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg" alt="" style="width: 24px; height: 24px;" />
+          <span class="action-icon-wrap" aria-hidden="true">
+            <span class="material-symbols-outlined icon-dark">location_on</span>
           </span>
           <span class="action-text">
             <span class="action-label">Visit my office</span>
@@ -83,8 +86,8 @@
         </a>
 
         <a href="mailto:engrshuvoda@gmail.com" class="action-btn" id="btn-email" aria-label="Send Shuvo an email">
-          <span class="action-icon-wrap icon-lightblue" aria-hidden="true">
-            <span class="material-symbols-outlined">mail</span>
+          <span class="action-icon-wrap" aria-hidden="true">
+            <span class="material-symbols-outlined icon-dark">mail</span>
           </span>
           <span class="action-text">
             <span class="action-label">Email me</span>
@@ -94,8 +97,8 @@
         </a>
 
         <a href="https://linkedin.com/in/engrshuvoda" target="_blank" rel="noopener noreferrer" class="action-btn" id="btn-linkedin" aria-label="Connect with Shuvo on LinkedIn">
-          <span class="action-icon-wrap icon-linkedin" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          <span class="action-icon-wrap" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="var(--icon-dark)"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
           </span>
           <span class="action-text">
             <span class="action-label">Follow my LinkedIn</span>

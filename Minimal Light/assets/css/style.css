@@ -59,6 +59,7 @@ a {
   padding: 40px 32px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0,0,0,0.02);
   border: 1px solid rgba(0,0,0,0.05);
+  position: relative;
 }
 
 /* ──────────────────────────────────────────────────────────
@@ -209,4 +210,40 @@ a {
   font-size: 20px;
   font-weight: 300;
   font-variation-settings: 'wght' 300;
+}
+
+/* ──────────────────────────────────────────────────────────
+   SHARE BUTTON (FAB)
+   ────────────────────────────────────────────────────────── */
+.share-fab {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border-light);
+  background: var(--bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.share-fab .material-symbols-outlined {
+  font-size: 20px;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.share-fab:hover {
+  background: #f9fafb;
+  color: var(--text-primary);
+  transform: scale(1.05);
+}
+
+.share-fab:active {
+  transform: scale(0.95);
 }
