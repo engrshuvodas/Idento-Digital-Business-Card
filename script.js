@@ -388,10 +388,11 @@
 
   if (shareBtn) {
     shareBtn.addEventListener('click', async () => {
+      const CARD_URL = 'https://engrshuvodas.github.io/Idento-Digital-Business-Card/';
       const shareData = {
         title: 'Engr Shuvo Das – Digital Business Card',
-        text: 'Connect with Engr Shuvo Das, Freelancer at Fiverr.',
-        url: window.location.href,
+        text: 'Connect with Engr Shuvo Das – Freelancer at Fiverr 🚀',
+        url: CARD_URL,
       };
 
       // Try native Web Share API first (mobile / Safari / Edge)
@@ -406,11 +407,12 @@
         }
       } else {
         // Clipboard fallback
+        const CARD_URL = 'https://engrshuvodas.github.io/Idento-Digital-Business-Card/';
         try {
-          await navigator.clipboard.writeText(window.location.href);
+          await navigator.clipboard.writeText(CARD_URL);
           showToast('🔗 Link copied to clipboard!');
         } catch (_) {
-          showToast('Copy this URL: ' + window.location.href, false);
+          showToast('Copy this URL: ' + CARD_URL, false);
         }
       }
 
