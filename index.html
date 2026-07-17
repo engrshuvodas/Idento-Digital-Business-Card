@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Idento – Digital Business Card Themes by Engr Shuvo Das" />
+  <title>Idento | Theme Gallery</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 48px 24px;
+    }
+
+    /* ── HEADER ── */
+    header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .logo {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: #64748b;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-top: 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #94a3b8;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── GRID ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* ── CARD ── */
+    .card {
+      display: block;
+      text-decoration: none;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 24px 20px;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,255,255,0.16);
+    }
+
+    /* Colour accent bar at top */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 20px 20px 0 0;
+    }
+
+    .icon {
+      font-size: 30px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .theme-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 4px;
+    }
+
+    .theme-desc {
+      font-size: 13px;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 24px;
+      right: 20px;
+      font-size: 18px;
+      color: rgba(255,255,255,0.2);
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .card:hover .arrow {
+      color: rgba(255,255,255,0.6);
+      transform: translateX(3px);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      margin-top: 56px;
+      font-size: 13px;
+      color: #334155;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <p class="logo">Idento</p>
+    <h1>Digital Business Card Themes</h1>
+    <p class="subtitle">Pick a theme to preview it</p>
+    <span class="badge">10 Themes Available</span>
+  </header>
+
+  <div class="grid">
+
+    <a href="Forest Glass/index.html" class="card" style="--accent: linear-gradient(90deg, #4ade80, #22d3ee);">
+      <span class="icon">🌿</span>
+      <p class="theme-name">Forest Glass</p>
+      <p class="theme-desc">Glassmorphism with animated green blobs and a bokeh background.</p>
+      <span class="arrow">›</span>
+    </a>
+
+    <a href="Minimal Light/index.html" class="card" style="--accent: linear-gradient(90deg, #e2e8f0, #94a3b8);">
+      <span class="icon">☀️</span>
+      <p class="theme-name">Minimal Light</p>
+      <p class="theme-desc">Clean white design. Simple, professional, and elegant.</p>
+      <span class="arrow">›</span>
+    </a>
+
+    <a href="Dark Galaxy/index.html" class="card" style="--accent: linear-gradient(90deg, #38bdf8, #818cf8);">
+      <span class="icon">🌌</span>
+      <p class="theme-name">Dark Galaxy</p>
+      <p class="theme-desc">Deep dark theme with glassy translucent action cards.</p>
+      <span class="arrow">›</span>
+    </a>
+
+    <a href="Rose Glass/index.html" class="card" style="--accent: linear-gradient(90deg, #f9a8d4, #c084fc);">
+      <span class="icon">🌸</span>
+      <p class="theme-name">Rose Glass</p>
+      <p class="theme-desc">Soft rose gradient with animated bubbles rising in the background.</p>
+      <span class="arrow">›</span>
+    </a>
+
+    <a href="Dynamic Influencer/index.html" class="card" style="--accent: linear-gradient(90deg, #f472b6, #818cf8);">
+      <span class="icon">✨</span>
+      <p class="theme-name">Dynamic Influencer</p>
+      <p class="theme-desc">Neon dark theme with floating animated social media icons.</p>
+      <span class="arrow">›</span>
+    </a>
+
+    <a href="Luxury Estate/index.html" class="card" style="--accent: linear-gradient(90deg, #c9a84c, #f5e3a9);">
+      <span class="icon">🏛️</span>
+      <p class="theme-name">Luxury Estate</p>
+      <p class="theme-desc">Deep navy & gold — for real estate agents. Gold constellation background.</p>
+      <span class="arrow">›</span>
+    </a>
+
+    <a href="Medical Pro/index.html" class="card" style="--accent: linear-gradient(90deg, #38bdf8, #0aafaa);">
+      <span class="icon">🩺</span>
+      <p class="theme-name">Medical Pro</p>
+      <p class="theme-desc">Clean white & blue for doctors. Animated ECG heartbeat line and pulse ring.</p>
+      <span class="arrow">›</span>
+    </a>
+
+    <a href="Trust Finance/index.html" class="card" style="--accent: linear-gradient(90deg, #0dbd6f, #56cfa0);">
+      <span class="icon">📈</span>
+      <p class="theme-name">Trust Finance</p>
+      <p class="theme-desc">Dark emerald green for financial advisors. Glowing chart background.</p>
+      <span class="arrow">›</span>
+    </a>
+
+    <a href="World Explorer/index.html" class="card" style="--accent: linear-gradient(90deg, #0affb2, #7f5af0);">
+      <span class="icon">🌠</span>
+      <p class="theme-name">World Explorer</p>
+      <p class="theme-desc">For tour operators. Aurora borealis + twinkling star field background.</p>
+      <span class="arrow">›</span>
+    </a>
+
+    <a href="Green Earth/index.html" class="card" style="--accent: linear-gradient(90deg, #4caf50, #f9a825);">
+      <span class="icon">🌿</span>
+      <p class="theme-name">Green Earth</p>
+      <p class="theme-desc">Dark forest night with falling leaves, fireflies, and tree silhouettes.</p>
+      <span class="arrow">›</span>
+    </a>
+
+  </div>
+
+  <footer>
+    Built by Engr Shuvo Das &nbsp;·&nbsp; Idento Digital Business Cards
+  </footer>
+
+</body>
+</html>
