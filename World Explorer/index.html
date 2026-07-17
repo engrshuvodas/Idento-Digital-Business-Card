@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Engr Shuvo Das – Tour Operator & Travel Consultant. Explore the world with us. Book your dream trip today." />
+  <title>Engr Shuvo Das | World Explorer</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Josefin Sans (travel/adventure feel) + Spectral (elegant name) -->
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Spectral:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <!-- Aurora + Stars canvas (full background) -->
+  <canvas id="aurora-canvas" aria-hidden="true"></canvas>
+
+  <main class="card-wrapper" role="main">
+    <article class="glass-card" aria-label="Engr Shuvo Das Tour Operator Business Card">
+
+      <!-- Share Button -->
+      <button class="share-fab" id="btn-share" aria-label="Share this card" title="Share">
+        <span class="material-symbols-outlined" aria-hidden="true">ios_share</span>
+      </button>
+
+      <!-- Profile Section -->
+      <header class="profile-section">
+        <div class="avatar-wrap">
+          <img src="assets/images/Shuvo Pro.png" alt="Engr Shuvo Das tour guide" class="avatar-img" loading="eager" />
+        </div>
+        <div class="name-block">
+          <h1 class="profile-name">Engr Shuvo Das</h1>
+          <p class="profile-title">Tour Operator · Travel Consultant</p>
+        </div>
+        <div class="destination-badge" aria-label="Speciality">
+          <span class="material-symbols-outlined" aria-hidden="true">travel_explore</span>
+          Worldwide Destinations
+        </div>
+      </header>
+
+      <!-- Save Contact CTA -->
+      <button class="save-contact-btn" id="btn-save-contact" aria-label="Save contact">
+        Save Contact
+      </button>
+
+      <!-- Action Buttons -->
+      <nav class="actions-list" aria-label="Contact actions">
+
+        <a href="https://wa.me/919641700503" target="_blank" rel="noopener noreferrer" class="action-btn" aria-label="WhatsApp to book a trip">
+          <span class="action-icon-wrap" aria-hidden="true">
+            <span class="material-symbols-outlined">call</span>
+          </span>
+          <span class="action-text">
+            <span class="action-label">Book a Trip</span>
+            <span class="action-sub">+91 96417 00503</span>
+          </span>
+          <span class="action-arrow material-symbols-outlined" aria-hidden="true">chevron_right</span>
+        </a>
+
+        <a href="mailto:engrshuvoda@gmail.com" class="action-btn" aria-label="Email for travel enquiry">
+          <span class="action-icon-wrap" aria-hidden="true">
+            <span class="material-symbols-outlined">mail</span>
+          </span>
+          <span class="action-text">
+            <span class="action-label">Send an Enquiry</span>
+            <span class="action-sub">engrshuvoda@gmail.com</span>
+          </span>
+          <span class="action-arrow material-symbols-outlined" aria-hidden="true">chevron_right</span>
+        </a>
+
+        <a href="https://www.instagram.com/engrshuvo74886/" target="_blank" rel="noopener noreferrer" class="action-btn" aria-label="Instagram — travel photos">
+          <span class="action-icon-wrap" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </span>
+          <span class="action-text">
+            <span class="action-label">Travel Gallery</span>
+            <span class="action-sub">@engrshuvo74886</span>
+          </span>
+          <span class="action-arrow material-symbols-outlined" aria-hidden="true">chevron_right</span>
+        </a>
+
+        <a href="https://maps.app.goo.gl/9TnqmrrwfwZEkH7EA" target="_blank" rel="noopener noreferrer" class="action-btn" aria-label="Visit our office">
+          <span class="action-icon-wrap" aria-hidden="true">
+            <span class="material-symbols-outlined">location_on</span>
+          </span>
+          <span class="action-text">
+            <span class="action-label">Visit our Office</span>
+            <span class="action-sub">Gujarat, India</span>
+          </span>
+          <span class="action-arrow material-symbols-outlined" aria-hidden="true">chevron_right</span>
+        </a>
+
+      </nav>
+
+    </article>
+  </main>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <script src="assets/js/script.js"></script>
+</body>
+</html>
