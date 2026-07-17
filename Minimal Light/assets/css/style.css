@@ -1,0 +1,212 @@
+/* ============================================================
+   STYLE.CSS – Minimal Light Theme
+   ============================================================ */
+
+:root {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  
+  --bg-body: #f7f9fc;
+  --bg-card: #ffffff;
+  --bg-btn-primary: #1e2633;
+  --bg-action-card: #f8f9fa;
+  
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-white: #ffffff;
+  
+  --border-light: #f3f4f6;
+  --arrow-color: #d1d5db;
+  
+  --radius-card: 48px;
+  --radius-btn: 12px;
+  --radius-action: 14px;
+  --radius-icon: 8px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ──────────────────────────────────────────────────────────
+   CARD LAYOUT
+   ────────────────────────────────────────────────────────── */
+.card-wrapper {
+  width: 100%;
+  max-width: 380px;
+}
+
+.clean-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-card);
+  padding: 40px 32px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0,0,0,0.02);
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+/* ──────────────────────────────────────────────────────────
+   PROFILE SECTION
+   ────────────────────────────────────────────────────────── */
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.avatar-ring {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 16px;
+  background-color: #f3f4f6;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-name {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.profile-title {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.highlight {
+  color: var(--text-primary);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+
+/* ──────────────────────────────────────────────────────────
+   SAVE CONTACT CTA
+   ────────────────────────────────────────────────────────── */
+.save-contact-btn {
+  width: 100%;
+  background: var(--bg-btn-primary);
+  color: var(--text-white);
+  border: none;
+  border-radius: var(--radius-btn);
+  padding: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 32px;
+  transition: transform 0.1s ease, background 0.2s ease;
+}
+
+.save-contact-btn:hover {
+  background: #111827;
+}
+
+.save-contact-btn:active {
+  transform: scale(0.97);
+}
+
+/* ──────────────────────────────────────────────────────────
+   ACTION BUTTONS
+   ────────────────────────────────────────────────────────── */
+.actions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  background: var(--bg-action-card);
+  padding: 12px 16px;
+  border-radius: var(--radius-action);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.action-btn:hover {
+  background: #f3f4f6;
+  transform: translateY(-2px);
+}
+
+.action-btn:active {
+  transform: scale(0.98);
+}
+
+/* Icons */
+.action-icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-icon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+  color: white;
+  flex-shrink: 0;
+}
+
+.icon-green { background: #128C7E; } /* WhatsApp */
+.icon-blue { background: #1877F2; } /* Facebook/Instagram vibe */
+.icon-maps { background: transparent; } /* Maps icon itself has color */
+.icon-lightblue { background: #3b82f6; } /* Email */
+.icon-linkedin { background: #0A66C2; } /* LinkedIn */
+
+.action-icon-wrap .material-symbols-outlined {
+  font-size: 22px;
+}
+
+/* Text */
+.action-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.action-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.action-sub {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Arrow */
+.action-arrow {
+  color: var(--arrow-color);
+  font-size: 20px;
+  font-weight: 300;
+  font-variation-settings: 'wght' 300;
+}
