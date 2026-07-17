@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    STYLE.CSS – Mike Gilson Digital Business Card
    Recreated from Stitch design ID: 4870904703855832271
    Architecture: CSS Custom Properties + Mobile-First
@@ -298,9 +298,9 @@ a {
   flex-direction: column;
   align-items: center;
   box-shadow: var(--shadow-card);
-  /* Subtle inner shine */
+  /* Relative so the share-fab can be positioned inside */
   position: relative;
-  overflow: hidden;
+  overflow: visible; /* allow FAB to sit at corner edge */
 }
 
 /* Top-edge shimmer line */
@@ -670,4 +670,129 @@ a {
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   user-select: none;
+}
+
+/* ──────────────────────────────────────────────────────────
+   15. FLOATING SHARE BUTTON (FAB)
+   ────────────────────────────────────────────────────────── */
+.share-fab {
+  /* Positioned at the top-right corner of the glass card */
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-on-surface);
+  cursor: pointer;
+  z-index: 10;
+  transition:
+    background var(--dur-mid) var(--ease-smooth),
+    border-color var(--dur-mid) var(--ease-smooth),
+    box-shadow var(--dur-mid) var(--ease-smooth),
+    transform var(--dur-fast) var(--ease-smooth);
+}
+
+.share-fab .material-symbols-outlined {
+  font-size: 20px;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.share-fab:hover {
+  background: var(--btn-hover-bg);
+  border-color: rgba(174, 209, 138, 0.35);
+  color: var(--color-primary);
+  box-shadow: 0 0 18px rgba(174, 209, 138, 0.2);
+  transform: scale(1.08);
+}
+
+.share-fab:active {
+  transform: scale(0.93);
+  transition-duration: var(--dur-fast);
+}
+
+/* Entrance animation for FAB */
+.share-fab {
+  opacity: 0;
+  animation: fabEnter 0.6s var(--ease-out-expo) 0.3s both;
+}
+
+@keyframes fabEnter {
+  from { opacity: 0; transform: scale(0.6) rotate(-20deg); }
+  to   { opacity: 1; transform: scale(1)   rotate(0deg);   }
+}
+
+/* ──────────────────────────────────────────────────────────
+   16. SAVE CONTACT BUTTON
+   ────────────────────────────────────────────────────────── */
+.save-contact-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: 14px var(--sp-6);
+  margin-bottom: var(--sp-8);
+  border-radius: var(--radius-full);
+  border: none;
+  /* Solid primary-container fill – stands out from the glass buttons */
+  background: var(--color-primary-container);
+  color: var(--color-on-primary-container);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  line-height: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(78, 124, 46, 0.35),
+              0 1px 4px rgba(0, 0, 0, 0.3);
+  transition:
+    background var(--dur-mid) var(--ease-smooth),
+    box-shadow var(--dur-mid) var(--ease-smooth),
+    transform var(--dur-fast) var(--ease-smooth);
+}
+
+.save-contact-btn .material-symbols-outlined {
+  font-size: 20px;
+  font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+}
+
+.save-contact-btn:hover {
+  background: #caeea4; /* primary-fixed – slightly lighter */
+  box-shadow: 0 6px 28px rgba(78, 124, 46, 0.5),
+              0 2px 6px rgba(0, 0, 0, 0.25);
+  transform: translateY(-1px);
+}
+
+.save-contact-btn:active {
+  transform: scale(0.96) translateY(0);
+  box-shadow: 0 2px 10px rgba(78, 124, 46, 0.3);
+  transition-duration: var(--dur-fast);
+}
+
+/* Entrance animation – slides in after name/title */
+.save-contact-btn {
+  opacity: 0;
+  animation: saveEnter 0.55s var(--ease-out-expo) 0.28s both;
+}
+
+@keyframes saveEnter {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+
+/* ── Success state (toggled by JS after click) ── */
+.save-contact-btn.saved {
+  background: var(--color-secondary-container);
+  color: var(--color-on-secondary-container);
+  box-shadow: none;
+  cursor: default;
+  pointer-events: none;
 }

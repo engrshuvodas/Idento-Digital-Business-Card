@@ -1,4 +1,4 @@
-﻿/**
+/**
  * script.js – Mike Gilson Digital Business Card
  * Recreated from Stitch design ID: 4870904703855832271
  *
@@ -8,6 +8,8 @@
  *  3. Canvas floating particles (performance-optimised RAF loop)
  *  4. Button ripple / press micro-interactions
  *  5. prefers-reduced-motion guard throughout
+ *  6. Share button (Web Share API + clipboard fallback + toast)
+ *  7. Save Contact (generates .vcf / vCard download)
  */
 
 (function () {
@@ -329,5 +331,150 @@
       }, 2000);
     }
   });
+
+  /* ============================================================
+     8. SHARE BUTTON
+     – Uses Web Share API where available (mobile/modern browsers)
+     – Falls back to copying the page URL to clipboard
+     – Shows a lightweight toast notification in both cases
+  ============================================================ */
+  const shareBtn = document.getElementById('btn-share');
+
+  /** Show a brief toast message */
+  function showToast(message, isSuccess = true) {
+    // Remove any existing toast
+    const existing = document.getElementById('card-toast');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.id = 'card-toast';
+    toast.textContent = message;
+    toast.style.cssText = `
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: ${isSuccess ? 'rgba(78, 124, 46, 0.92)' : 'rgba(50,50,50,0.92)'};
+      color: #dfe4db;
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 10px 20px;
+      border-radius: 999px;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(174,209,138,0.25);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    `;
+    document.body.appendChild(toast);
+
+    // Trigger animation
+    requestAnimationFrame(() => {
+      toast.style.opacity  = '1';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+    });
+
+    // Auto-dismiss
+    setTimeout(() => {
+      toast.style.opacity   = '0';
+      toast.style.transform = 'translateX(-50%) translateY(8px)';
+      toast.addEventListener('transitionend', () => toast.remove(), { once: true });
+    }, 2800);
+  }
+
+  if (shareBtn) {
+    shareBtn.addEventListener('click', async () => {
+      const shareData = {
+        title: 'Mike Gilson – Digital Business Card',
+        text: 'Connect with Mike Gilson, Manager at BioPharm Company.',
+        url: window.location.href,
+      };
+
+      // Try native Web Share API first (mobile / Safari / Edge)
+      if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+        try {
+          await navigator.share(shareData);
+          // Native sheet opened – no toast needed
+        } catch (err) {
+          if (err.name !== 'AbortError') {
+            showToast('Could not share – try copying the link.');
+          }
+        }
+      } else {
+        // Clipboard fallback
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+          showToast('🔗 Link copied to clipboard!');
+        } catch (_) {
+          showToast('Copy this URL: ' + window.location.href, false);
+        }
+      }
+
+      // Ripple on the FAB too
+      if (!prefersReducedMotion) {
+        shareBtn.style.transform = 'scale(0.88)';
+        setTimeout(() => (shareBtn.style.transform = ''), 150);
+      }
+    });
+  }
+
+  /* ============================================================
+     9. SAVE CONTACT BUTTON
+     – Generates a vCard (.vcf) file and triggers download
+     – Swaps icon + label to a "Saved!" success state
+  ============================================================ */
+  const saveBtn = document.getElementById('btn-save-contact');
+
+  if (saveBtn) {
+    saveBtn.addEventListener('click', () => {
+      /* ── Build vCard 3.0 string ── */
+      const vcard = [
+        'BEGIN:VCARD',
+        'VERSION:3.0',
+        'FN:Mike Gilson',
+        'N:Gilson;Mike;;;',
+        'ORG:BioPharm Company',
+        'TITLE:Manager',
+        'TEL;TYPE=WORK,VOICE:+12124567890',
+        'EMAIL;TYPE=WORK:mike.gilson@gmail.com',
+        'ADR;TYPE=WORK:;;2003 Philadelphia Pike;;;;;',
+        'URL:https://linkedin.com/in/mike-gilson',
+        'END:VCARD',
+      ].join('\r\n');
+
+      /* ── Trigger download ── */
+      const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href     = url;
+      a.download = 'mike-gilson.vcf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      /* ── Success state ── */
+      const icon  = saveBtn.querySelector('.material-symbols-outlined');
+      const delay = prefersReducedMotion ? 0 : 250;
+
+      saveBtn.disabled = true;
+
+      setTimeout(() => {
+        if (icon) icon.textContent = 'check_circle';
+        // Replace text node (last child)
+        const textNodes = [...saveBtn.childNodes].filter(
+          (n) => n.nodeType === Node.TEXT_NODE
+        );
+        textNodes.forEach((n) => (n.textContent = ' Saved!'));
+        saveBtn.classList.add('saved');
+      }, delay);
+
+      showToast('✅ Contact saved to your device!');
+    });
+  }
 
 })();
