@@ -1,111 +1,207 @@
-# 📇 Idento - Digital Business Card Themes
+<div align="center">
+  
+  # 📇 Idento
+  
+  ### **Digital Business Card Themes Gallery**
+  
+  <p align="center">
+    <a href="https://engrshuvodas.github.io/Idento-Digital-Business-Card/">
+      <img src="https://img.shields.io/badge/Live%20Demo-Active-brightgreen?style=for-the-badge&logo=github" alt="Live Demo" />
+    </a>
+    <a href="https://github.com/engrshuvodas/Idento-Digital-Business-Card/blob/main/LICENSE">
+      <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="License" />
+    </a>
+    <img src="https://img.shields.io/badge/Stack-HTML5%20%7C%20JS-blue?style=for-the-badge&logo=html5" alt="Stack" />
+  </p>
 
-[![GitHub pages](https://img.shields.io/badge/GitHub%20Pages-Active-brightgreen.svg)](https://engrshuvodas.github.io/Idento-Digital-Business-Card/)
-[![Tech Stack](https://img.shields.io/badge/Stack-HTML5%20%7C%20CSS3%20%7C%20JS%20(ES6)-blue.svg)](#-zero-dependency-performance)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+  <p><strong>Idento</strong> is a collection of 9 responsive, animated digital business cards. Built using pure front-end web technologies, these templates are fast, fully responsive, and feature a client-side vCard (.vcf) contact generator.</p>
 
-**Idento** is a premium collection of **9 responsive, animated digital business cards** designed to help freelancers, realtors, healthcare professionals, financial advisors, and creators build a striking online presence. 
+  <h4>
+    <a href="https://engrshuvodas.github.io/Idento-Digital-Business-Card/">Explore The Gallery Live</a>
+  </h4>
 
-Built with pure, modern vanilla web technologies, these templates are fast, fully responsive, highly interactive, and come equipped with an automatic client-side vCard (.vcf) contact generator.
-
-> [!TIP]
-> **Live Demo:** You can explore the live interactive gallery and test all themes at [engrshuvodas.github.io/Idento-Digital-Business-Card](https://engrshuvodas.github.io/Idento-Digital-Business-Card/).
+</div>
 
 ---
 
-## ✨ Key Features
+## ⚡ Key Features
 
-*   🎨 **9 Handcrafted Premium Themes:** From high-end luxury layouts to glassmorphic or neon-lit profiles, choose a vibe that fits your profession perfectly.
-*   💾 **Client-Side vCard (.vcf) Generator:** A single click on the "Save Contact" button automatically packages your details into a standard vCard file and starts the download so users can add you to their contacts instantly.
-*   🔗 **Smart Web Share API:** Utilizes native device sharing sheets on mobile browsers (Safari/Chrome/Edge) with a fallback to clipboard copying and animated toast alerts on desktop.
-*   ✨ **Premium Micro-Interactions & Parallax:** Includes interactive particle systems on HTML5 canvases, mouse-following blur glows, gyro-based mobile tilt effects, and ripple buttons.
-*   ♿ **Motion-Sensitive Accessibility:** Fully respects the user's OS preference via the `prefers-reduced-motion` media query, disabling animations gracefully for a solid static experience.
-*   ⚡ **Zero-Dependency Engine:** 100% vanilla HTML, custom CSS variables, and clean JavaScript. No complex build chains, npm modules, or frameworks required.
+<table width="100%">
+  <tr>
+    <td width="50%">
+      <h4>🎨 9 Handcrafted Themes</h4>
+      <p>Beautiful layouts tailored for freelancers, realtors, healthcare workers, financial advisors, and creators.</p>
+    </td>
+    <td width="50%">
+      <h4>💾 vCard (.vcf) Generator</h4>
+      <p>Generates and downloads contact files directly on the client-side so users can save your details instantly.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <h4>🔗 Smart Share Menu</h4>
+      <p>Integrates the native Web Share API on mobile devices, with a clipboard-copy and toast notification fallback on desktop.</p>
+    </td>
+    <td width="50%">
+      <h4>✨ Micro-Interactions</h4>
+      <p>Includes canvas particle effects, mouse-following glows, gyro-based mobile parallax, and button ripples.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <h4>♿ Accessibility First</h4>
+      <p>Respects system preferences like <code>prefers-reduced-motion</code> to automatically disable animations when requested.</p>
+    </td>
+    <td width="50%">
+      <h4>⚡ Zero-Dependency Engine</h4>
+      <p>Built with vanilla HTML and modern Javascript. No frameworks, libraries, npm packages, or build setups required.</p>
+    </td>
+  </tr>
+</table>
 
 ---
 
 ## 🎨 Theme Catalog
 
-| Theme Icon | Theme Name | Accent Colors / Style | Best Suited For | Key Animation / Visual Effect |
-| :---: | :--- | :--- | :--- | :--- |
-| 🌿 | **Forest Glass** | Green & Cyan Gradient, Glassmorphism | Creative Freelancers | Animated background blobs, bokeh parallax |
-| ☀️ | **Minimal Light** | Soft Slate, Light Mode | Executive & Corporate | Clean borders, elegant typography, minimalist shadows |
-| 🌌 | **Dark Galaxy** | Sky Blue & Indigo, Dark Glass | Developers & Tech Stars | Floating starfields, translucent action cards |
-| 🌸 | **Rose Glass** | Pink & Purple, Soft Glass | Creators & Beauty | Rising animated background bubbles |
-| ✨ | **Dynamic Influencer** | Hot Pink & Blue, Neon Dark | Social Creators & Artists | Neon outline glows, floating social media brand badges |
-| 🏛️ | **Luxury Estate** | Deep Navy & Gold | Realtors & Luxury Brands | Golden constellation background, premium golden highlights |
-| 🩺 | **Medical Pro** | Blue & Medical Teal | Doctors & Healthcare | Animated ECG heartbeat line, pulsing rings |
-| 📈 | **Trust Finance** | Emerald Green & Mint, Dark Chart | Advisors & Stock Analysts | Glowing dynamic grid chart background |
-| 🍁 | **Green Earth** | Forest Green & Amber, Deep Night | Eco brands & Nature | Falling leaves, floating fireflies, tree silhouettes |
+<table width="100%">
+  <thead>
+    <tr>
+      <th align="center">Icon</th>
+      <th align="left">Theme Name</th>
+      <th align="left">Style / Aesthetic</th>
+      <th align="left">Target Role</th>
+      <th align="left">Key Visual Effect</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">🌿</td>
+      <td><strong>Forest Glass</strong></td>
+      <td>Green & Cyan, Glassmorphism</td>
+      <td>Creative Freelancers</td>
+      <td>Animated blobs, bokeh parallax</td>
+    </tr>
+    <tr>
+      <td align="center">☀️</td>
+      <td><strong>Minimal Light</strong></td>
+      <td>Slate & White, Light Mode</td>
+      <td>Executive & Corporate</td>
+      <td>Minimal shadows, sleek borders</td>
+    </tr>
+    <tr>
+      <td align="center">🌌</td>
+      <td><strong>Dark Galaxy</strong></td>
+      <td>Blue & Indigo, Dark Glass</td>
+      <td>Tech & Developers</td>
+      <td>Floating starfields, glass cards</td>
+    </tr>
+    <tr>
+      <td align="center">🌸</td>
+      <td><strong>Rose Glass</strong></td>
+      <td>Pink & Purple, Soft Glass</td>
+      <td>Beauty & Creators</td>
+      <td>Rising background bubbles</td>
+    </tr>
+    <tr>
+      <td align="center">✨</td>
+      <td><strong>Dynamic Influencer</strong></td>
+      <td>Neon Pink & Blue, Dark Neon</td>
+      <td>Influencers & Artists</td>
+      <td>Floating badges, neon outlines</td>
+    </tr>
+    <tr>
+      <td align="center">🏛️</td>
+      <td><strong>Luxury Estate</strong></td>
+      <td>Navy & Gold, Premium Dark</td>
+      <td>Real Estate & High-end</td>
+      <td>Gold constellation star map</td>
+    </tr>
+    <tr>
+      <td align="center">🩺</td>
+      <td><strong>Medical Pro</strong></td>
+      <td>Blue & Medical Teal, Light</td>
+      <td>Doctors & Healthcare</td>
+      <td>ECG heartbeat, pulsing rings</td>
+    </tr>
+    <tr>
+      <td align="center">📈</td>
+      <td><strong>Trust Finance</strong></td>
+      <td>Emerald & Mint, Dark Grid</td>
+      <td>Advisors & Analysts</td>
+      <td>Glowing chart background grid</td>
+    </tr>
+    <tr>
+      <td align="center">🍁</td>
+      <td><strong>Green Earth</strong></td>
+      <td>Forest & Amber, Night Nature</td>
+      <td>Eco brands & Botanists</td>
+      <td>Falling leaves & fireflies</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
-## 🛠️ How to Customize Your Card
+## ⚙️ Customization Guide
 
-Customizing a template with your personal information takes just a few steps:
+<details>
+<summary><b>1. How to change the Profile Picture</b></summary>
+<br>
+Place your profile image inside the assets directory of your selected theme:
+<pre><code>[Theme Directory]/assets/images/your-photo.png</code></pre>
+Then open <code>index.html</code> and edit the image tag src attribute:
+<pre><code>&lt;img src="assets/images/your-photo.png" alt="Your Name Professional Headshot" class="avatar-img" /&gt;</code></pre>
+</details>
 
-### 1. Replace the Avatar Image
-*   Place your professional headshot image in the `assets/images/` directory of your chosen theme (e.g. `Forest Glass/assets/images/`).
-*   Open `index.html` and look for the profile header section. Update the image source:
-    ```html
-    <img src="assets/images/your-photo.png" alt="Your Name Professional Headshot" class="avatar-img" />
-    ```
+<details>
+<summary><b>2. How to update Personal & Social Info</b></summary>
+<br>
+Open <code>index.html</code> of your theme and edit the header text:
+<pre><code>&lt;h1 class="profile-name"&gt;Your Name&lt;/h1&gt;
+&lt;p class="profile-title"&gt;Your Title | Company&lt;/p&gt;</code></pre>
+Modify the contact link buttons to match your accounts:
+<pre><code>&lt;a href="https://instagram.com/yourprofile" class="action-btn"&gt;
+  ...
+&lt;/a&gt;</code></pre>
+</details>
 
-### 2. Update Personal Details & Social Links
-*   Open `index.html` and change the text in the headers:
-    ```html
-    <h1 class="profile-name">Your Name</h1>
-    <p class="profile-title">Your Job Title | Your Company</p>
-    ```
-*   Update the links (`href` attributes) in the actions navigation list (`<nav class="actions-list">`) to point to your Instagram, WhatsApp, Email, LinkedIn, Google Maps location, etc.
-
-### 3. Customize the Save Contact Button (vCard)
-Open `assets/js/script.js` and locate the vCard generator block at the bottom of the script (usually around line 430). Modify the details inside the array to match yours:
-
-```javascript
-const vcard = [
+<details>
+<summary><b>3. How to edit the Contact Downloader (vCard Details)</b></summary>
+<br>
+Open <code>assets/js/script.js</code> and locate the vCard builder at the bottom of the script. Edit the properties:
+<pre><code>const vcard = [
   'BEGIN:VCARD',
   'VERSION:3.0',
   'FN:Your Full Name',
   'N:LastName;FirstName;;;',
-  'ORG:Your Company Name',
-  'TITLE:Your Professional Title',
-  'TEL;TYPE=CELL,VOICE:+1234567890',          // Your phone number
-  'EMAIL;TYPE=WORK:your.email@example.com',    // Your email
-  'ADR;TYPE=HOME:;;City;State;Zip;Country',   // Your address
-  'URL:https://linkedin.com/in/yourusername', // Your portfolio or LinkedIn URL
+  'ORG:Your Company',
+  'TITLE:Your Title',
+  'TEL;TYPE=CELL,VOICE:+1234567890',
+  'EMAIL;TYPE=WORK:your.email@example.com',
+  'ADR;TYPE=HOME:;;City;State;Zip;Country',
+  'URL:https://linkedin.com/in/yourusername',
   'END:VCARD'
-].join('\r\n');
-```
-*   Update the filename to match yours (e.g., change `'engr-shuvo-das.vcf'` to `'your-name.vcf'`).
+].join('\r\n');</code></pre>
+</details>
 
 ---
 
-## 🌐 Deploy to GitHub Pages (Free Hosting)
+## 🚀 Deployment Guide
 
-Since the project uses purely static front-end code, you can host it for free on GitHub Pages:
-
-1.  Push the repository code to your GitHub account.
-2.  Navigate to your repository page on GitHub.
-3.  Go to **Settings** -> **Pages** (under the Code and automation section).
-4.  Under **Build and deployment**, set the source to **Deploy from a branch**.
-5.  Select your main branch (e.g. `main`) and the root folder `/`, then click **Save**.
-6.  Your site will be live at `https://<your-github-username>.github.io/Idento-Digital-Business-Card/` within a minute!
-
----
-
-## 🔒 Performance & Accessibility
-
-*   **Responsive Images:** Image assets are loaded with optimal sizes and configured with `loading="eager"` or `loading="lazy"` according to position.
-*   **Accessible Markup:** Utilizes semantic HTML tags (`<header>`, `<main>`, `<article>`, `<nav>`, `<footer>`) and explicit accessibility labels (`aria-label`, `aria-hidden`) for screen readers.
-*   **Performance First:** The WebGL/Canvas canvas animations are optimized using active resource management in a `requestAnimationFrame` render loop, reducing GPU/CPU battery drain.
+<details>
+<summary><b>Deploying to GitHub Pages</b></summary>
+<br>
+<ol>
+  <li>Push the repository to GitHub.</li>
+  <li>Open the repository page and click on <b>Settings</b>.</li>
+  <li>Scroll down to <b>Pages</b> on the left sidebar.</li>
+  <li>Set the source build and deployment branch to <code>main</code> (or your default branch) and folder to <code>/ (root)</code>.</li>
+  <li>Click <b>Save</b>. Your site will be published at <code>https://[your-username].github.io/Idento-Digital-Business-Card/</code></li>
+</ol>
+</details>
 
 ---
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-*Designed and crafted with ❤️ by [Engr Shuvo Das](https://github.com/engrshuvodas).*
+<div align="center">
+  <p>Designed and crafted by <a href="https://github.com/engrshuvodas">Engr Shuvo Das</a></p>
+</div>
