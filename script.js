@@ -1,5 +1,5 @@
 /**
- * script.js – Mike Gilson Digital Business Card
+ * script.js – Engr Shuvo Das Digital Business Card
  * Recreated from Stitch design ID: 4870904703855832271
  *
  * Features:
@@ -389,8 +389,8 @@
   if (shareBtn) {
     shareBtn.addEventListener('click', async () => {
       const shareData = {
-        title: 'Mike Gilson – Digital Business Card',
-        text: 'Connect with Mike Gilson, Manager at BioPharm Company.',
+        title: 'Engr Shuvo Das – Digital Business Card',
+        text: 'Connect with Engr Shuvo Das, Freelancer at Fiverr.',
         url: window.location.href,
       };
 
@@ -435,14 +435,14 @@
       const vcard = [
         'BEGIN:VCARD',
         'VERSION:3.0',
-        'FN:Mike Gilson',
-        'N:Gilson;Mike;;;',
-        'ORG:BioPharm Company',
-        'TITLE:Manager',
-        'TEL;TYPE=WORK,VOICE:+12124567890',
-        'EMAIL;TYPE=WORK:mike.gilson@gmail.com',
-        'ADR;TYPE=WORK:;;2003 Philadelphia Pike;;;;;',
-        'URL:https://linkedin.com/in/mike-gilson',
+        'FN:Engr Shuvo Das',
+        'N:Das;Shuvo;;;',
+        'ORG:Fiverr',
+        'TITLE:Freelancer',
+        'TEL;TYPE=CELL,VOICE:+919641700503',
+        'EMAIL;TYPE=WORK:engrshuvoda@gmail.com',
+        'ADR;TYPE=HOME:;;Gujarat;;;; India',
+        'URL:https://linkedin.com/in/engrshuvoda',
         'END:VCARD',
       ].join('\r\n');
 
@@ -451,7 +451,7 @@
       const url  = URL.createObjectURL(blob);
       const a    = document.createElement('a');
       a.href     = url;
-      a.download = 'mike-gilson.vcf';
+      a.download = 'engr-shuvo-das.vcf';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
