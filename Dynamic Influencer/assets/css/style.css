@@ -1,0 +1,342 @@
+/* ============================================================
+   STYLE.CSS – Dynamic Influencer Theme
+   ============================================================ */
+
+:root {
+  --font-sans: 'Outfit', system-ui, sans-serif;
+  
+  /* Dynamic Neon Background */
+  --bg-color: #0b0f19;
+  
+  /* Glassmorphism */
+  --glass-card: rgba(15, 20, 30, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-btn: rgba(255, 255, 255, 0.05);
+  --glass-btn-hover: rgba(255, 255, 255, 0.1);
+  --glass-action: rgba(255, 255, 255, 0.04);
+  --glass-action-hover: rgba(255, 255, 255, 0.08);
+  
+  /* Colors */
+  --color-accent-1: #ff007a; /* Neon Pink */
+  --color-accent-2: #7928ca; /* Deep Purple */
+  --color-accent-3: #00f0ff; /* Cyan */
+  
+  --text-primary: #ffffff;
+  --text-secondary: #a0aec0;
+  
+  --radius-card: 36px;
+  --radius-btn: 16px;
+  --radius-action: 16px;
+  --radius-icon: 12px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-color);
+  /* A glowing radial background */
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(255, 0, 122, 0.15), transparent 40%),
+    radial-gradient(circle at 85% 30%, rgba(0, 240, 255, 0.15), transparent 40%),
+    radial-gradient(circle at 50% 100%, rgba(121, 40, 202, 0.2), transparent 50%);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ──────────────────────────────────────────────────────────
+   CANVAS ANIMATION
+   ────────────────────────────────────────────────────────── */
+#social-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ──────────────────────────────────────────────────────────
+   CARD LAYOUT
+   ────────────────────────────────────────────────────────── */
+.card-wrapper {
+  width: 100%;
+  max-width: 400px;
+  z-index: 10;
+  position: relative;
+}
+
+.glass-card {
+  background: var(--glass-card);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-radius: var(--radius-card);
+  padding: 40px 32px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.02);
+  position: relative;
+}
+
+/* ──────────────────────────────────────────────────────────
+   SHARE BUTTON (FAB)
+   ────────────────────────────────────────────────────────── */
+.share-fab {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  z-index: 20;
+}
+
+.share-fab .material-symbols-outlined {
+  font-size: 20px;
+  font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+}
+
+.share-fab:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.08);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.share-fab:active {
+  transform: scale(0.95);
+}
+
+/* ──────────────────────────────────────────────────────────
+   PROFILE SECTION
+   ────────────────────────────────────────────────────────── */
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.avatar-ring {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  padding: 4px;
+  /* Animated gradient ring */
+  background: linear-gradient(135deg, var(--color-accent-1), var(--color-accent-2), var(--color-accent-3));
+  background-size: 200% 200%;
+  animation: gradientRotate 4s ease infinite;
+  box-shadow: 0 8px 30px rgba(255, 0, 122, 0.3);
+  margin-bottom: 16px;
+}
+
+@keyframes gradientRotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid var(--bg-color);
+}
+
+.profile-name {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.profile-title {
+  font-size: 15px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.highlight {
+  color: var(--color-accent-3);
+  font-weight: 700;
+}
+
+/* ──────────────────────────────────────────────────────────
+   SAVE CONTACT CTA
+   ────────────────────────────────────────────────────────── */
+.save-contact-btn {
+  width: 100%;
+  /* Vibrant gradient */
+  background: linear-gradient(90deg, var(--color-accent-1) 0%, var(--color-accent-2) 100%);
+  color: var(--text-primary);
+  border: none;
+  border-radius: var(--radius-btn);
+  padding: 16px;
+  font-size: 16px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  margin-bottom: 32px;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+  box-shadow: 0 10px 20px rgba(121, 40, 202, 0.4);
+}
+
+.save-contact-btn:hover {
+  box-shadow: 0 12px 28px rgba(255, 0, 122, 0.5);
+  transform: translateY(-2px);
+}
+
+.save-contact-btn:active {
+  transform: scale(0.96) translateY(0);
+}
+
+/* ──────────────────────────────────────────────────────────
+   ACTION BUTTONS
+   ────────────────────────────────────────────────────────── */
+.actions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  background: var(--glass-action);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  padding: 14px 16px;
+  border-radius: var(--radius-action);
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.action-btn:hover {
+  background: var(--glass-action-hover);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.action-btn:active {
+  transform: scale(0.98);
+}
+
+/* Icons */
+.action-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-icon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+.icon-youtube { color: #ff0000; }
+.icon-instagram { color: #e1306c; }
+.icon-tiktok { color: #ffffff; } /* TikTok logo is white on dark */
+.icon-collab { color: var(--color-accent-3); }
+
+/* Text */
+.action-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.action-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.action-sub {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Arrow */
+.action-arrow {
+  color: rgba(255,255,255,0.3);
+  font-size: 24px;
+  font-weight: 400;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.action-btn:hover .action-arrow {
+  color: rgba(255,255,255,0.8);
+  transform: translateX(2px);
+}
+
+/* ──────────────────────────────────────────────────────────
+   TOAST NOTIFICATION
+   ────────────────────────────────────────────────────────── */
+.toast-container {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.toast {
+  background: var(--text-primary);
+  color: var(--bg-color);
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: toastEnter 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.toast.fade-out {
+  animation: toastExit 0.3s ease-in forwards;
+}
+
+@keyframes toastEnter {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes toastExit {
+  to { opacity: 0; transform: translateY(20px); }
+}
