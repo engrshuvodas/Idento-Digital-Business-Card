@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Generate beautiful, scannable QR codes for your Idento Digital Business Card. Customize styles, colors, and logos." />
+  <title>QR Code Generator | Idento Digital Business Card</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+  <style>
+    :root {
+      --bg:         #07071a;
+      --bg-card:    rgba(255,255,255,0.04);
+      --border:     rgba(255,255,255,0.08);
+      --ba:         rgba(139,92,246,0.4);
+      --accent:     #8b5cf6;
+      --accent2:    #06b6d4;
+      --grad:       linear-gradient(135deg,#8b5cf6,#06b6d4);
+      --t1:         #f1f5f9;
+      --t2:         #94a3b8;
+      --t3:         #475569;
+      --success:    #10b981;
+      --warn:       #f59e0b;
+      --r:          14px;
+      --rs:         8px;
+      --tr:         0.18s cubic-bezier(.4,0,.2,1);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 700px 500px at 15% 5%,rgba(139,92,246,.13) 0%,transparent 70%),radial-gradient(ellipse 600px 400px at 85% 95%,rgba(6,182,212,.09) 0%,transparent 70%);pointer-events:none;z-index:0}
+
+    /* HEADER */
+    .hdr{position:sticky;top:0;z-index:100;background:rgba(7,7,26,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+    .hdr-in{max-width:1440px;margin:0 auto;padding:0 32px;height:68px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:14px;flex-shrink:0}
+    .brand-ico{width:44px;height:44px;border-radius:12px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;flex-shrink:0}
+    .brand h1{font-size:17px;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .brand p{font-size:11px;color:var(--t3);margin-top:1px}
+    .back{display:flex;align-items:center;gap:6px;text-decoration:none;color:var(--t2);font-size:13px;font-weight:500;padding:8px 16px;border-radius:var(--rs);border:1px solid var(--border);transition:var(--tr);white-space:nowrap}
+    .back:hover{color:var(--t1);border-color:var(--ba);background:var(--bg-card)}
+
+    /* LAYOUT */
+    .main{max-width:1440px;margin:0 auto;padding:28px 32px 60px;display:grid;grid-template-columns:460px 1fr;gap:24px;position:relative;z-index:1;align-items:start}
+    .controls{display:flex;flex-direction:column;gap:14px}
+
+    /* SECTIONS */
+    .sec{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;transition:border-color var(--tr)}
+    .sec:hover{border-color:rgba(139,92,246,.18)}
+    .sh{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+    .sh-ico{width:32px;height:32px;border-radius:8px;background:rgba(139,92,246,.14);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+    .sh-title{font-size:13px;font-weight:600;color:var(--t1)}
+    .sh-sub{font-size:11px;color:var(--t3);margin-top:1px}
+    .lbl{display:block;font-size:11px;font-weight:500;color:var(--t2);margin-bottom:6px}
+    .inp{width:100%;padding:9px 13px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--rs);color:var(--t1);font-family:inherit;font-size:13px;outline:none;transition:var(--tr)}
+    .inp:focus{border-color:var(--accent);background:rgba(139,92,246,.06)}
+    .inp::placeholder{color:var(--t3)}
+    select.inp{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:14px;padding-right:34px}
+    select.inp option{background:#1a1a3a}
+    .frow{margin-bottom:12px}
+    .frow:last-child{margin-bottom:0}
+
+    /* STYLE GRID */
+    .sg{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+    .sopt{position:relative}
+    .sopt input[type=radio]{position:absolute;opacity:0;width:0;height:0}
+    .sopt-l{display:flex;flex-direction:column;align-items:center;gap:5px;padding:11px 6px 9px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:var(--tr);text-align:center}
+    .sopt input[type=radio]:checked+.sopt-l{border-color:var(--accent);background:rgba(139,92,246,.1)}
+    .sopt-l:hover{border-color:var(--ba);background:rgba(139,92,246,.05)}
+    .sopt-svg{width:38px;height:38px;color:var(--t2)}
+    .sopt input[type=radio]:checked+.sopt-l .sopt-svg{color:var(--accent)}
+    .sopt-name{font-size:10px;font-weight:500;color:var(--t3)}
+    .sopt input[type=radio]:checked+.sopt-l .sopt-name{color:var(--accent)}
+
+    /* COLOR ROWS */
+    .cr{display:flex;align-items:center;gap:10px;padding:9px 11px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:var(--rs);margin-bottom:7px}
+    .cr:last-child{margin-bottom:0}
+    .csw{width:34px;height:34px;border-radius:7px;border:2px solid rgba(255,255,255,.12);position:relative;flex-shrink:0;cursor:pointer}
+    .csw-bg{position:absolute;inset:0;border-radius:5px}
+    .csw input[type=color]{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
+    .ci{flex:1}
+    .clbl{font-size:12px;font-weight:500;color:var(--t1)}
+    .cval{font-size:10px;color:var(--t3);font-family:monospace;margin-top:1px}
+    .chex{width:86px!important;padding:5px 9px!important;font-family:monospace!important;font-size:11px!important;text-transform:uppercase}
+
+    /* SLIDERS */
+    .sl-row{margin-bottom:13px}
+    .sl-row:last-child{margin-bottom:0}
+    .sl-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+    .sl-lbl{font-size:11px;font-weight:500;color:var(--t2)}
+    .sl-val{font-size:11px;font-weight:700;color:var(--accent);background:rgba(139,92,246,.1);padding:2px 8px;border-radius:4px}
+    input[type=range]{width:100%;height:4px;-webkit-appearance:none;appearance:none;background:rgba(255,255,255,.1);border-radius:2px;outline:none;cursor:pointer}
+    input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--accent);cursor:pointer;transition:transform var(--tr)}
+    input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2)}
+    input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--accent);border:3px solid var(--bg);cursor:pointer}
+
+    /* ECC */
+    .ecc-g{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+    .eopt{position:relative}
+    .eopt input[type=radio]{position:absolute;opacity:0;width:0;height:0}
+    .eopt-l{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 4px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;transition:var(--tr);text-align:center}
+    .eopt input[type=radio]:checked+.eopt-l{border-color:var(--accent);background:rgba(139,92,246,.1)}
+    .eopt-l:hover{border-color:var(--ba)}
+    .eopt-lt{font-size:17px;font-weight:800;color:var(--t2)}
+    .eopt-d{font-size:9px;color:var(--t3);font-weight:500}
+    .eopt input[type=radio]:checked+.eopt-l .eopt-lt{color:var(--accent)}
+    .eopt input[type=radio]:checked+.eopt-l .eopt-d{color:rgba(139,92,246,.7)}
+
+    /* CORNER GRIDS */
+    .cg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+    .copt{position:relative}
+    .copt input[type=radio]{position:absolute;opacity:0;width:0;height:0}
+    .copt-l{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 5px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;transition:var(--tr);text-align:center}
+    .copt input[type=radio]:checked+.copt-l{border-color:var(--accent);background:rgba(139,92,246,.1)}
+    .copt-l:hover{border-color:var(--ba)}
+    .copt-svg{width:32px;height:32px;color:var(--t2)}
+    .copt-name{font-size:10px;color:var(--t3);font-weight:500}
+    .copt input[type=radio]:checked+.copt-l .copt-svg{color:var(--accent)}
+    .copt input[type=radio]:checked+.copt-l .copt-name{color:var(--accent)}
+
+    /* LOGO */
+    .logo-drop{border:2px dashed var(--border);border-radius:var(--r);padding:24px;text-align:center;cursor:pointer;transition:var(--tr);position:relative}
+    .logo-drop:hover,.logo-drop.drag-over{border-color:var(--accent);background:rgba(139,92,246,.06)}
+    .logo-drop input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+    .ld-ico{font-size:28px;margin-bottom:6px}
+    .ld-txt{font-size:13px;font-weight:500;color:var(--t2)}
+    .ld-sub{font-size:10px;color:var(--t3);margin-top:3px}
+    .lprev{display:none;flex-direction:column;gap:10px}
+    .lprev.show{display:flex}
+    .lrow{display:flex;align-items:center;gap:10px;padding:9px 11px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:var(--rs)}
+    .lthumb{width:44px;height:44px;border-radius:7px;object-fit:contain;background:#fff;padding:3px;flex-shrink:0}
+    .lname{flex:1;font-size:11px;color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .btn-rm{padding:5px 11px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:6px;color:#f87171;font-size:11px;font-weight:500;cursor:pointer;transition:var(--tr);font-family:inherit}
+    .btn-rm:hover{background:rgba(239,68,68,.18)}
+
+    /* PREVIEW */
+    .pnl{display:flex;flex-direction:column;gap:18px;position:sticky;top:88px}
+    .qr-card{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:30px 24px;display:flex;flex-direction:column;align-items:center;gap:18px}
+    .qr-title{font-size:17px;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center}
+    .qr-sub{font-size:11px;color:var(--t3);margin-top:2px;text-align:center}
+    #qr-preview{border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:280px;min-width:280px;position:relative}
+    #qr-preview canvas,#qr-preview svg{border-radius:8px;max-width:300px;max-height:300px;display:block}
+    .url-pill{max-width:360px;padding:5px 14px;background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.2);border-radius:999px;font-size:11px;font-weight:500;color:var(--accent);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}
+    .scan-b{display:flex;align-items:center;gap:7px;padding:6px 14px;border-radius:999px;font-size:11px;font-weight:600}
+    .scan-b.ok{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);color:#10b981}
+    .scan-b.warn{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);color:#f59e0b}
+    .scan-dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+
+    /* DOWNLOAD */
+    .dl-sec{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px}
+    .dl-title{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);margin-bottom:12px}
+    .dl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .btn-dl{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 8px;border-radius:10px;border:1.5px solid var(--border);background:rgba(255,255,255,.03);cursor:pointer;transition:var(--tr);color:var(--t2);font-family:inherit}
+    .btn-dl:hover{border-color:var(--accent);background:rgba(139,92,246,.1);color:var(--t1);transform:translateY(-2px)}
+    .btn-dl:active{transform:translateY(0)}
+    .dl-ext{font-size:17px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .dl-lbl{font-size:10px;font-weight:500;color:inherit}
+
+    /* ACTIONS */
+    .act-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .btn-act{padding:11px 18px;border-radius:10px;border:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:7px;transition:var(--tr)}
+    .btn-save{background:var(--grad);color:#fff}
+    .btn-save:hover{opacity:.88;transform:translateY(-1px)}
+    .btn-reset{background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--t2)}
+    .btn-reset:hover{background:rgba(255,255,255,.1);color:var(--t1)}
+
+    /* TOAST */
+    .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(18px);background:rgba(16,185,129,.95);color:#fff;padding:11px 24px;border-radius:999px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:all .28s cubic-bezier(.4,0,.2,1);z-index:9999;backdrop-filter:blur(10px);box-shadow:0 6px 28px rgba(16,185,129,.3);white-space:nowrap}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .toast.warn{background:rgba(245,158,11,.95);box-shadow:0 6px 28px rgba(245,158,11,.3)}
+
+    /* LOADING */
+    .qr-loading{position:absolute;inset:0;display:none;align-items:center;justify-content:center;border-radius:12px;background:rgba(7,7,26,.6);backdrop-filter:blur(4px);z-index:5}
+    .qr-loading.show{display:flex}
+    .spinner{width:36px;height:36px;border:3px solid rgba(139,92,246,.2);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* RESPONSIVE */
+    @media(max-width:1080px){
+      .main{grid-template-columns:1fr}
+      .pnl{position:static;order:-1;flex-direction:row;flex-wrap:wrap}
+      .qr-card{flex:1 1 340px}
+      .dl-sec,.act-row{flex:1 1 300px}
+    }
+    @media(max-width:640px){
+      .main{padding:16px;gap:16px}
+      .hdr-in{padding:0 16px}
+      .brand p{display:none}
+      .pnl{flex-direction:column}
+    }
+    ::-webkit-scrollbar{width:5px}
+    ::-webkit-scrollbar-track{background:transparent}
+    ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px}
+    ::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.18)}
+  </style>
+</head>
+<body>
+
+  <header class="hdr">
+    <div class="hdr-in">
+      <div class="brand">
+        <div class="brand-ico">QR</div>
+        <div>
+          <h1>QR Code Generator</h1>
+          <p>Create scannable QR codes for your digital business card</p>
+        </div>
+      </div>
+      <a href="index.html" class="back">← Back to Gallery</a>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- ═══════════ CONTROLS ═══════════ -->
+    <div class="controls">
+
+      <!-- 1. URL -->
+      <div class="sec">
+        <div class="sh">
+          <div class="sh-ico">🔗</div>
+          <div><div class="sh-title">Business Card URL</div><div class="sh-sub">Choose which card to link the QR code to</div></div>
+        </div>
+        <div class="frow">
+          <label class="lbl" for="tpl-sel">Card Template</label>
+          <select class="inp" id="tpl-sel">
+            <option value="custom">— Enter a Custom URL —</option>
+            <option value="https://engrshuvodas.github.io/Idento-Digital-Business-Card/Forest Glass/">🌿 Forest Glass</option>
+            <option value="https://engrshuvodas.github.io/Idento-Digital-Business-Card/Dark Galaxy/">🌌 Dark Galaxy</option>
+            <option value="https://engrshuvodas.github.io/Idento-Digital-Business-Card/Rose Glass/">🌸 Rose Glass</option>
+            <option value="https://engrshuvodas.github.io/Idento-Digital-Business-Card/Minimal Light/">☀️ Minimal Light</option>
+            <option value="https://engrshuvodas.github.io/Idento-Digital-Business-Card/Luxury Estate/">🏛️ Luxury Estate</option>
+            <option value="https://engrshuvodas.github.io/Idento-Digital-Business-Card/Trust Finance/">📈 Trust Finance</option>
+            <option value="https://engrshuvodas.github.io/Idento-Digital-Business-Card/Green Earth/">🌍 Green Earth</option>
+            <option value="https://engrshuvodas.github.io/Idento-Digital-Business-Card/Medical Pro/">⚕️ Medical Pro</option>
+            <option value="https://engrshuvodas.github.io/Idento-Digital-Business-Card/Dynamic Influencer/">⚡ Dynamic Influencer</option>
+          </select>
+        </div>
+        <div class="frow" id="cu-row" style="display:none">
+          <label class="lbl" for="cu-inp">Custom URL</label>
+          <input type="url" class="inp" id="cu-inp" placeholder="https://your-domain.com/card" />
+        </div>
+      </div>
+
+      <!-- 2. Dot Style -->
+      <div class="sec">
+        <div class="sh">
+          <div class="sh-ico">◉</div>
+          <div><div class="sh-title">QR Dot Style</div><div class="sh-sub">How the data modules are drawn</div></div>
+        </div>
+        <div class="sg" id="dot-grid"></div>
+      </div>
+
+      <!-- 3. Colors -->
+      <div class="sec">
+        <div class="sh">
+          <div class="sh-ico">🎨</div>
+          <div><div class="sh-title">Colors</div><div class="sh-sub">Foreground, background, and corner tints</div></div>
+        </div>
+        <div id="color-mount"></div>
+      </div>
+
+      <!-- 4. Corner Eyes -->
+      <div class="sec">
+        <div class="sh">
+          <div class="sh-ico">⬛</div>
+          <div><div class="sh-title">Corner Eye Design</div><div class="sh-sub">Style the three finder-pattern corners</div></div>
+        </div>
+        <div class="frow">
+          <label class="lbl">Outer Square Style</label>
+          <div class="cg" id="csq-grid"></div>
+        </div>
+        <div class="frow" style="margin-top:12px">
+          <label class="lbl">Inner Dot Style</label>
+          <div class="cg" id="cdot-grid"></div>
+        </div>
+      </div>
+
+      <!-- 5. Logo -->
+      <div class="sec">
+        <div class="sh">
+          <div class="sh-ico">🖼️</div>
+          <div><div class="sh-title">Logo / Image</div><div class="sh-sub">Embed your logo in the QR center</div></div>
+        </div>
+        <div class="logo-drop" id="logo-drop">
+          <input type="file" id="logo-file" accept="image/*" />
+          <div class="ld-ico">⬆️</div>
+          <div class="ld-txt">Click or drag &amp; drop your logo</div>
+          <div class="ld-sub">PNG with transparency recommended · JPG / SVG / WebP also supported</div>
+        </div>
+        <div class="lprev" id="lprev">
+          <div class="lrow">
+            <img class="lthumb" id="lthumb" src="" alt="Logo" />
+            <span class="lname" id="lname">logo.png</span>
+            <button class="btn-rm" id="btn-rm">✕ Remove</button>
+          </div>
+          <div class="sl-row">
+            <div class="sl-head"><span class="sl-lbl">Logo Size</span><span class="sl-val" id="lsz-val">30%</span></div>
+            <input type="range" id="lsz" min="10" max="50" value="30" />
+          </div>
+          <div class="sl-row">
+            <div class="sl-head"><span class="sl-lbl">Logo Padding</span><span class="sl-val" id="lpad-val">5px</span></div>
+            <input type="range" id="lpad" min="0" max="20" value="5" />
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Advanced -->
+      <div class="sec">
+        <div class="sh">
+          <div class="sh-ico">⚙️</div>
+          <div><div class="sh-title">Advanced Settings</div><div class="sh-sub">Output size, margin, and error correction</div></div>
+        </div>
+        <div class="sl-row">
+          <div class="sl-head"><span class="sl-lbl">Output Size</span><span class="sl-val" id="sz-val">400 px</span></div>
+          <input type="range" id="qr-sz" min="200" max="1000" step="50" value="400" />
+        </div>
+        <div class="sl-row">
+          <div class="sl-head"><span class="sl-lbl">Quiet Zone (Margin)</span><span class="sl-val" id="mg-val">10 px</span></div>
+          <input type="range" id="qr-mg" min="0" max="50" step="2" value="10" />
+        </div>
+        <div class="frow">
+          <label class="lbl">Error Correction Level</label>
+          <div class="ecc-g">
+            <div class="eopt"><input type="radio" name="ecc" id="ecc-l" value="L"><label class="eopt-l" for="ecc-l"><span class="eopt-lt">L</span><span class="eopt-d">7% restore</span></label></div>
+            <div class="eopt"><input type="radio" name="ecc" id="ecc-m" value="M"><label class="eopt-l" for="ecc-m"><span class="eopt-lt">M</span><span class="eopt-d">15% restore</span></label></div>
+            <div class="eopt"><input type="radio" name="ecc" id="ecc-q" value="Q"><label class="eopt-l" for="ecc-q"><span class="eopt-lt">Q</span><span class="eopt-d">25% restore</span></label></div>
+            <div class="eopt"><input type="radio" name="ecc" id="ecc-h" value="H" checked><label class="eopt-l" for="ecc-h"><span class="eopt-lt">H</span><span class="eopt-d">30% restore</span></label></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ═══════════ PREVIEW ═══════════ -->
+    <div class="pnl">
+
+      <div class="qr-card">
+        <div><div class="qr-title">Live Preview</div><div class="qr-sub">Updates instantly as you customise</div></div>
+        <div id="qr-preview">
+          <div class="qr-loading show" id="qr-load"><div class="spinner"></div></div>
+        </div>
+        <div class="url-pill" id="url-pill">Loading…</div>
+        <div class="scan-b ok" id="scan-b">
+          <div class="scan-dot"></div>
+          <span id="scan-msg">Scannable ✓ — Works on Android &amp; iPhone</span>
+        </div>
+      </div>
+
+      <div class="dl-sec">
+        <div class="dl-title">⬇ Download</div>
+        <div class="dl-grid">
+          <button class="btn-dl" id="btn-png"><span class="dl-ext">PNG</span><span class="dl-lbl">High-Res</span></button>
+          <button class="btn-dl" id="btn-svg"><span class="dl-ext">SVG</span><span class="dl-lbl">Vector</span></button>
+          <button class="btn-dl" id="btn-pdf"><span class="dl-ext">PDF</span><span class="dl-lbl">Print-Ready</span></button>
+        </div>
+      </div>
+
+      <div class="act-row">
+        <button class="btn-act btn-save" id="btn-save">💾 Save Settings</button>
+        <button class="btn-act btn-reset" id="btn-reset">↺ Reset Default</button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  (function(){
+    'use strict';
+
+    /* ── CONSTANTS ── */
+    const SK = 'idento-qr-v1';
+    const PS = 300; // preview size px
+
+    const DEF = {
+      url:'', dotStyle:'square', csqStyle:'square', cdotStyle:'square',
+      dotColor:'#000000', bgColor:'#ffffff', cornerColor:'#000000',
+      size:400, margin:10, ecc:'H', logoSize:0.30, logoPad:5
+    };
+
+    /* ── DOT STYLES ── */
+    const DS = [
+      { v:'square', n:'Square',
+        s:`<svg viewBox="0 0 40 40" fill="currentColor"><rect x="2" y="2" width="10" height="10"/><rect x="15" y="2" width="10" height="10"/><rect x="28" y="2" width="10" height="10"/><rect x="2" y="15" width="10" height="10"/><rect x="15" y="15" width="10" height="10"/><rect x="28" y="15" width="10" height="10"/><rect x="2" y="28" width="10" height="10"/><rect x="15" y="28" width="10" height="10"/><rect x="28" y="28" width="10" height="10"/></svg>` },
+      { v:'dot', n:'Dots',
+        s:`<svg viewBox="0 0 40 40" fill="currentColor"><circle cx="7" cy="7" r="5"/><circle cx="20" cy="7" r="5"/><circle cx="33" cy="7" r="5"/><circle cx="7" cy="20" r="5"/><circle cx="20" cy="20" r="5"/><circle cx="33" cy="20" r="5"/><circle cx="7" cy="33" r="5"/><circle cx="20" cy="33" r="5"/><circle cx="33" cy="33" r="5"/></svg>` },
+      { v:'rounded', n:'Rounded',
+        s:`<svg viewBox="0 0 40 40" fill="currentColor"><rect x="2" y="2" width="10" height="10" rx="3"/><rect x="15" y="2" width="10" height="10" rx="3"/><rect x="28" y="2" width="10" height="10" rx="3"/><rect x="2" y="15" width="10" height="10" rx="3"/><rect x="15" y="15" width="10" height="10" rx="3"/><rect x="28" y="15" width="10" height="10" rx="3"/><rect x="2" y="28" width="10" height="10" rx="3"/><rect x="15" y="28" width="10" height="10" rx="3"/><rect x="28" y="28" width="10" height="10" rx="3"/></svg>` },
+      { v:'extra-rounded', n:'Pill',
+        s:`<svg viewBox="0 0 40 40" fill="currentColor"><rect x="2" y="2" width="10" height="10" rx="5"/><rect x="15" y="2" width="10" height="10" rx="5"/><rect x="28" y="2" width="10" height="10" rx="5"/><rect x="2" y="15" width="10" height="10" rx="5"/><rect x="15" y="15" width="10" height="10" rx="5"/><rect x="28" y="15" width="10" height="10" rx="5"/><rect x="2" y="28" width="10" height="10" rx="5"/><rect x="15" y="28" width="10" height="10" rx="5"/><rect x="28" y="28" width="10" height="10" rx="5"/></svg>` },
+      { v:'classy', n:'Classy',
+        s:`<svg viewBox="0 0 40 40" fill="currentColor"><polygon points="7,2 12,7 7,12 2,7"/><polygon points="20,2 25,7 20,12 15,7"/><polygon points="33,2 38,7 33,12 28,7"/><polygon points="7,15 12,20 7,25 2,20"/><polygon points="20,15 25,20 20,25 15,20"/><polygon points="33,15 38,20 33,25 28,20"/><polygon points="7,28 12,33 7,38 2,33"/><polygon points="20,28 25,33 20,38 15,33"/><polygon points="33,28 38,33 33,38 28,33"/></svg>` },
+      { v:'classy-rounded', n:'Classy+',
+        s:`<svg viewBox="0 0 40 40" fill="currentColor"><ellipse cx="7" cy="7" rx="5" ry="5"/><ellipse cx="20" cy="7" rx="5" ry="5"/><ellipse cx="33" cy="7" rx="5" ry="5"/><ellipse cx="7" cy="20" rx="5" ry="5"/><ellipse cx="20" cy="20" rx="5" ry="5"/><ellipse cx="33" cy="20" rx="5" ry="5"/><ellipse cx="7" cy="33" rx="5" ry="5"/><ellipse cx="20" cy="33" rx="5" ry="5"/><ellipse cx="33" cy="33" rx="5" ry="5"/></svg>` },
+    ];
+
+    /* ── CORNER SQUARE STYLES ── */
+    const CSQ = [
+      { v:'square', n:'Square',
+        s:`<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="3"><rect x="2" y="2" width="28" height="28"/><rect x="9" y="9" width="14" height="14" fill="currentColor" stroke="none"/></svg>` },
+      { v:'dot', n:'Dot Eye',
+        s:`<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="3"><rect x="2" y="2" width="28" height="28"/><circle cx="16" cy="16" r="7" fill="currentColor" stroke="none"/></svg>` },
+      { v:'extra-rounded', n:'Rounded',
+        s:`<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="3"><rect x="2" y="2" width="28" height="28" rx="8"/><rect x="9" y="9" width="14" height="14" rx="4" fill="currentColor" stroke="none"/></svg>` },
+    ];
+
+    /* ── CORNER DOT STYLES ── */
+    const CDOT = [
+      { v:'square', n:'Square',
+        s:`<svg viewBox="0 0 32 32" fill="currentColor"><rect x="9" y="9" width="14" height="14"/></svg>` },
+      { v:'dot', n:'Circle',
+        s:`<svg viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="16" r="7"/></svg>` },
+    ];
+
+    /* ── COLOR CONFIG ── */
+    const CC = [
+      { k:'dotColor',    lbl:'Dot / Foreground', id:'c-dot'    },
+      { k:'bgColor',     lbl:'Background',        id:'c-bg'     },
+      { k:'cornerColor', lbl:'Corner Eyes',       id:'c-corner' },
+    ];
+
+    /* ── STATE ── */
+    let st = {...DEF};
+    let logoUrl = null;
+    let qr = null;
+    let dtimer = null;
+
+    /* ── UTILS ── */
+    const $ = s => document.querySelector(s);
+    const $$ = s => document.querySelectorAll(s);
+
+    /* ── BUILD DOT GRID ── */
+    function buildDots() {
+      const g = $('#dot-grid');
+      DS.forEach(d => {
+        const el = document.createElement('div');
+        el.className = 'sopt';
+        el.innerHTML = `<input type="radio" name="ds" id="ds-${d.v}" value="${d.v}" ${d.v===st.dotStyle?'checked':''}/>
+          <label class="sopt-l" for="ds-${d.v}"><span class="sopt-svg">${d.s}</span><span class="sopt-name">${d.n}</span></label>`;
+        g.appendChild(el);
+      });
+      g.addEventListener('change', e => { st.dotStyle=e.target.value; go(); });
+    }
+
+    /* ── BUILD CORNER GRIDS ── */
+    function buildCorner(cid, arr, skey, rname) {
+      const g = $(cid);
+      arr.forEach(d => {
+        const el = document.createElement('div');
+        el.className = 'copt';
+        el.innerHTML = `<input type="radio" name="${rname}" id="${rname}-${d.v}" value="${d.v}" ${d.v===st[skey]?'checked':''}/>
+          <label class="copt-l" for="${rname}-${d.v}"><span class="copt-svg">${d.s}</span><span class="copt-name">${d.n}</span></label>`;
+        g.appendChild(el);
+      });
+      g.addEventListener('change', e => { st[skey]=e.target.value; go(); });
+    }
+
+    /* ── BUILD COLOR PICKERS ── */
+    function buildColors() {
+      const m = $('#color-mount');
+      CC.forEach(c => {
+        const row = document.createElement('div');
+        row.className='cr';
+        row.innerHTML=`
+          <div class="csw" id="${c.id}-sw"><div class="csw-bg" id="${c.id}-bg" style="background:${st[c.k]}"></div>
+            <input type="color" id="${c.id}-pk" value="${st[c.k]}"/></div>
+          <div class="ci"><div class="clbl">${c.lbl}</div><div class="cval" id="${c.id}-v">${st[c.k].toUpperCase()}</div></div>
+          <input type="text" class="inp chex" id="${c.id}-hx" value="${st[c.k].toUpperCase()}" maxlength="7" spellcheck="false"/>`;
+        m.appendChild(row);
+
+        const pk=$(`#${c.id}-pk`), hx=$(`#${c.id}-hx`), bg=$(`#${c.id}-bg`), vd=$(`#${c.id}-v`);
+
+        pk.addEventListener('input',()=>{
+          const v=pk.value; st[c.k]=v; bg.style.background=v;
+          hx.value=v.toUpperCase(); vd.textContent=v.toUpperCase(); go();
+        });
+
+        hx.addEventListener('input',()=>{
+          let v=hx.value.trim();
+          if(!v.startsWith('#')) v='#'+v;
+          if(/^#[0-9a-fA-F]{6}$/.test(v)){
+            st[c.k]=v; bg.style.background=v; pk.value=v;
+            vd.textContent=v.toUpperCase(); go();
+          }
+        });
+      });
+    }
+
+    /* ── QR OPTIONS ── */
+    function opts(size) {
+      const url = st.url || 'https://engrshuvodas.github.io/Idento-Digital-Business-Card/';
+      return {
+        width:size, height:size, type:'svg',
+        data: url,
+        image: logoUrl||undefined,
+        margin: st.margin,
+        qrOptions:{ errorCorrectionLevel: st.ecc },
+        dotsOptions:{ color:st.dotColor, type:st.dotStyle },
+        cornersSquareOptions:{ color:st.cornerColor, type:st.csqStyle },
+        cornersDotOptions:{ color:st.cornerColor, type:st.cdotStyle },
+        backgroundOptions:{ color:st.bgColor },
+        imageOptions:{ crossOrigin:'anonymous', margin:st.logoPad, imageSize:st.logoSize, hideBackgroundDots:true }
+      };
+    }
+
+    /* ── INIT QR ── */
+    function initQR() {
+      qr = new QRCodeStyling(opts(PS));
+      qr.append($('#qr-preview'));
+      setTimeout(()=>$('#qr-load').classList.remove('show'), 600);
+      pill(); badge();
+    }
+
+    /* ── DEBOUNCED UPDATE ── */
+    function go() { clearTimeout(dtimer); dtimer=setTimeout(upd,130); }
+
+    function upd() {
+      $('#qr-load').classList.add('show');
+      qr.update(opts(PS));
+      pill(); badge();
+      setTimeout(()=>$('#qr-load').classList.remove('show'), 300);
+    }
+
+    function pill() { $('#url-pill').textContent = st.url||'No URL selected'; }
+
+    function badge() {
+      const b=$('#scan-b'), m=$('#scan-msg');
+      const lowEcc = st.ecc==='L'||st.ecc==='M';
+      if(logoUrl && lowEcc){
+        b.className='scan-b warn';
+        m.textContent='⚠️ Use error correction Q or H with a logo';
+      } else {
+        b.className='scan-b ok';
+        m.textContent='Scannable ✓ — Works on Android & iPhone cameras';
+      }
+    }
+
+    /* ── DOWNLOADS ── */
+    async function dlQR(ext) {
+      try {
+        const tmp = new QRCodeStyling(opts(st.size));
+        await tmp.download({ name:'idento-qr-code', extension:ext });
+        toast(`Downloaded as ${ext.toUpperCase()}! ✅`);
+      } catch(e) { console.error(e); toast('Download failed',true); }
+    }
+
+    async function dlPDF() {
+      toast('Generating PDF…');
+      try {
+        const tmp = new QRCodeStyling({...opts(st.size), type:'canvas'});
+        const td = document.createElement('div');
+        td.style.cssText='position:fixed;left:-9999px;top:-9999px;visibility:hidden;';
+        document.body.appendChild(td);
+        tmp.append(td);
+        await new Promise(r=>setTimeout(r,700));
+        const cv = td.querySelector('canvas');
+        if(!cv){ toast('PDF failed',true); document.body.removeChild(td); return; }
+
+        const img = cv.toDataURL('image/png');
+        const {jsPDF} = window.jspdf;
+        const pdf = new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+        const pw=pdf.internal.pageSize.getWidth(), ph=pdf.internal.pageSize.getHeight();
+        const qmm=Math.min(pw,ph)*0.62, qx=(pw-qmm)/2, qy=(ph-qmm)/2-10;
+
+        pdf.setFontSize(18); pdf.setFont('helvetica','bold'); pdf.setTextColor(30,30,80);
+        pdf.text('Digital Business Card', pw/2, qy-14, {align:'center'});
+
+        pdf.setFontSize(8); pdf.setFont('helvetica','normal'); pdf.setTextColor(100,100,140);
+        pdf.text(st.url||'Scan to open the digital business card', pw/2, qy-7, {align:'center'});
+
+        pdf.addImage(img,'PNG',qx,qy,qmm,qmm);
+
+        pdf.setFontSize(8); pdf.setTextColor(150,150,180);
+        pdf.text('Scan with your phone camera to open instantly', pw/2, qy+qmm+8, {align:'center'});
+        pdf.text('Generated by Idento QR Code Generator', pw/2, qy+qmm+14, {align:'center'});
+
+        pdf.save('idento-qr-code.pdf');
+        document.body.removeChild(td);
+        toast('PDF downloaded! ✅');
+      } catch(e){ console.error(e); toast('PDF failed',true); }
+    }
+
+    /* ── LOGO ── */
+    function handleLogo(file) {
+      if(!file||!file.type.startsWith('image/')){ toast('Please upload an image',true); return; }
+      const r=new FileReader();
+      r.onload=e=>{
+        logoUrl=e.target.result;
+        $('#lthumb').src=logoUrl;
+        $('#lname').textContent=file.name;
+        $('#lprev').classList.add('show');
+        $('#logo-drop').style.display='none';
+        if(st.ecc==='L'||st.ecc==='M') toast('⚠️ Tip: Switch ECC to H for best scanning',true);
+        go();
+      };
+      r.readAsDataURL(file);
+    }
+
+    function rmLogo() {
+      logoUrl=null;
+      $('#lthumb').src=''; $('#logo-file').value='';
+      $('#lprev').classList.remove('show');
+      $('#logo-drop').style.display='';
+      go();
+    }
+
+    /* ── SAVE / LOAD / RESET ── */
+    function save() {
+      try {
+        const d={...st};
+        if(logoUrl) d.logoDataUrl=logoUrl;
+        localStorage.setItem(SK,JSON.stringify(d));
+        toast('Settings saved! 💾');
+      } catch { toast('Save failed',true); }
+    }
+
+    function load() {
+      try {
+        const raw=localStorage.getItem(SK);
+        if(!raw) return;
+        const d=JSON.parse(raw);
+        Object.keys(DEF).forEach(k=>{ if(d[k]!==undefined) st[k]=d[k]; });
+        if(d.logoDataUrl) logoUrl=d.logoDataUrl;
+      } catch { /* ignore */ }
+    }
+
+    function applyToForm() {
+      const saved=JSON.parse(localStorage.getItem(SK)||'{}');
+
+      // URL
+      if(st.url){
+        const sel=$('#tpl-sel');
+        let found=false;
+        for(const o of sel.options){ if(o.value===st.url){ sel.value=o.value; found=true; break; } }
+        if(!found){ sel.value='custom'; $('#cu-row').style.display=''; $('#cu-inp').value=st.url; }
+      }
+
+      // Radios
+      const dr=$(`#ds-${st.dotStyle}`); if(dr) dr.checked=true;
+      const cr=$(`#csq-${st.csqStyle}`); if(cr) cr.checked=true;
+      const dr2=$(`#cdot-${st.cdotStyle}`); if(dr2) dr2.checked=true;
+      const er=$(`#ecc-${st.ecc.toLowerCase()}`); if(er) er.checked=true;
+
+      // Sliders
+      $('#qr-sz').value=st.size; $('#sz-val').textContent=`${st.size} px`;
+      $('#qr-mg').value=st.margin; $('#mg-val').textContent=`${st.margin} px`;
+      const lpct=Math.round(st.logoSize*100);
+      $('#lsz').value=lpct; $('#lsz-val').textContent=`${lpct}%`;
+      $('#lpad').value=st.logoPad; $('#lpad-val').textContent=`${st.logoPad}px`;
+
+      // Colors
+      CC.forEach(c=>{
+        const v=st[c.k];
+        $(`#${c.id}-pk`).value=v;
+        $(`#${c.id}-hx`).value=v.toUpperCase();
+        $(`#${c.id}-bg`).style.background=v;
+        $(`#${c.id}-v`).textContent=v.toUpperCase();
+      });
+
+      // Logo
+      if(logoUrl){
+        $('#lthumb').src=logoUrl; $('#lname').textContent='Saved logo';
+        $('#lprev').classList.add('show'); $('#logo-drop').style.display='none';
+      }
+    }
+
+    function reset() {
+      st={...DEF}; logoUrl=null;
+      localStorage.removeItem(SK);
+      // Radios
+      $$('[name="ds"]').forEach(r=>r.checked=r.value===DEF.dotStyle);
+      $$('[name="csq"]').forEach(r=>r.checked=r.value===DEF.csqStyle);
+      $$('[name="cdot"]').forEach(r=>r.checked=r.value===DEF.cdotStyle);
+      $$('[name="ecc"]').forEach(r=>r.checked=r.value===DEF.ecc);
+      // Sliders
+      $('#qr-sz').value=DEF.size; $('#sz-val').textContent=`${DEF.size} px`;
+      $('#qr-mg').value=DEF.margin; $('#mg-val').textContent=`${DEF.margin} px`;
+      $('#lsz').value=Math.round(DEF.logoSize*100); $('#lsz-val').textContent=`${Math.round(DEF.logoSize*100)}%`;
+      $('#lpad').value=DEF.logoPad; $('#lpad-val').textContent=`${DEF.logoPad}px`;
+      // Colors
+      CC.forEach(c=>{
+        const v=DEF[c.k];
+        $(`#${c.id}-pk`).value=v; $(`#${c.id}-hx`).value=v.toUpperCase();
+        $(`#${c.id}-bg`).style.background=v; $(`#${c.id}-v`).textContent=v.toUpperCase();
+      });
+      // URL
+      $('#tpl-sel').value='custom'; $('#cu-row').style.display='none'; $('#cu-inp').value='';
+      // Logo
+      rmLogo();
+      go();
+      toast('Reset to defaults ↺');
+    }
+
+    /* ── TOAST ── */
+    let tt;
+    function toast(msg,warn=false){
+      clearTimeout(tt);
+      const el=$('#toast');
+      el.textContent=msg;
+      el.className='toast'+(warn?' warn':'')+' show';
+      tt=setTimeout(()=>el.classList.remove('show'),3200);
+    }
+
+    /* ── BIND EVENTS ── */
+    function bind() {
+      // URL
+      $('#tpl-sel').addEventListener('change',e=>{
+        const v=e.target.value;
+        if(v==='custom'){ $('#cu-row').style.display=''; st.url=$('#cu-inp').value.trim(); }
+        else { $('#cu-row').style.display='none'; st.url=v; }
+        go();
+      });
+      $('#cu-inp').addEventListener('input',e=>{ st.url=e.target.value.trim(); go(); });
+
+      // Sliders
+      $('#qr-sz').addEventListener('input',e=>{ st.size=parseInt(e.target.value); $('#sz-val').textContent=`${st.size} px`; });
+      $('#qr-mg').addEventListener('input',e=>{ st.margin=parseInt(e.target.value); $('#mg-val').textContent=`${st.margin} px`; go(); });
+      $('#lsz').addEventListener('input',e=>{ st.logoSize=parseInt(e.target.value)/100; $('#lsz-val').textContent=`${e.target.value}%`; go(); });
+      $('#lpad').addEventListener('input',e=>{ st.logoPad=parseInt(e.target.value); $('#lpad-val').textContent=`${e.target.value}px`; go(); });
+
+      // ECC
+      $$('[name="ecc"]').forEach(r=>r.addEventListener('change',e=>{ st.ecc=e.target.value; go(); }));
+
+      // Logo
+      $('#logo-file').addEventListener('change',e=>{ if(e.target.files[0]) handleLogo(e.target.files[0]); });
+      const drop=$('#logo-drop');
+      drop.addEventListener('dragover',e=>{ e.preventDefault(); drop.classList.add('drag-over'); });
+      drop.addEventListener('dragleave',()=>drop.classList.remove('drag-over'));
+      drop.addEventListener('drop',e=>{ e.preventDefault(); drop.classList.remove('drag-over'); if(e.dataTransfer.files[0]) handleLogo(e.dataTransfer.files[0]); });
+      $('#btn-rm').addEventListener('click',rmLogo);
+
+      // Downloads
+      $('#btn-png').addEventListener('click',()=>dlQR('png'));
+      $('#btn-svg').addEventListener('click',()=>dlQR('svg'));
+      $('#btn-pdf').addEventListener('click',dlPDF);
+
+      // Save / Reset
+      $('#btn-save').addEventListener('click',save);
+      $('#btn-reset').addEventListener('click',reset);
+    }
+
+    /* ── BOOT ── */
+    document.addEventListener('DOMContentLoaded',()=>{
+      load();
+      buildDots();
+      buildCorner('#csq-grid', CSQ,  'csqStyle',  'csq');
+      buildCorner('#cdot-grid',CDOT, 'cdotStyle', 'cdot');
+      buildColors();
+      bind();
+      applyToForm();
+      initQR();
+    });
+
+  })();
+  </script>
+
+</body>
+</html>
