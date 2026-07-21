@@ -426,8 +426,10 @@
 
   /* ============================================================
      9. SAVE CONTACT BUTTON
-     – Generates a vCard (.vcf) file and triggers download
-     – Swaps icon + label to a "Saved!" success state
+     – 3-tier platform-aware vCard save for best UX on every device
+     – Tier 1: iOS Safari  → data URI opens Contacts app natively
+     – Tier 2: Android     → Blob .vcf download + guided toast
+     – Tier 3: Desktop     → Blob .vcf download + desktop toast
   ============================================================ */
   const saveBtn = document.getElementById('btn-save-contact');
 
@@ -448,29 +450,41 @@
         'END:VCARD',
       ].join('\r\n');
 
-      /* ── Trigger download ── */
-      const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
-      const url  = URL.createObjectURL(blob);
-      const a    = document.createElement('a');
-      a.href     = url;
-      a.download = 'engr-shuvo-das.vcf';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
+      /* ── Platform detection ── */
+      const isIOS    = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+      const isAndroid = /android/i.test(navigator.userAgent);
+
+      if (isIOS && isSafari) {
+        /* Tier 1 – iOS Safari: data URI triggers native Add Contact sheet */
+        window.location.href = 'data:text/x-vcard;charset=utf-8,' + encodeURIComponent(vcard);
+        showToast('📲 Tap "Add New Contact" to save!');
+      } else {
+        /* Tier 2 & 3 – Android + Desktop: Blob .vcf download */
+        const blob = new Blob([vcard], { type: 'text/x-vcard;charset=utf-8' });
+        const url  = URL.createObjectURL(blob);
+        const a    = document.createElement('a');
+        a.href     = url;
+        a.download = 'engr-shuvo-das.vcf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        showToast(isAndroid
+          ? '📲 Tap the downloaded file → "Open with Contacts"'
+          : '💾 Open the downloaded .vcf file to add to contacts!'
+        );
+      }
 
       /* ── Success state ── */
-      const icon  = saveBtn.querySelector('.material-symbols-outlined');
       const delay = prefersReducedMotion ? 0 : 250;
-
       saveBtn.disabled = true;
 
       setTimeout(() => {
         saveBtn.innerHTML = '<span class="material-symbols-outlined" aria-hidden="true">check_circle</span> Saved!';
         saveBtn.classList.add('saved');
       }, delay);
-
-      showToast('✅ Contact saved to your device!');
     });
   }
 
